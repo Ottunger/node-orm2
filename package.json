@@ -66,6 +66,7 @@
     "enforce": "0.1.7",
     "hat": "0.0.3",
     "lodash": "4.17.10",
+    "node-uuid" : "1.4.7",
     "path-is-absolute": "1.0.1",
     "sql-ddl-sync": "0.3.14",
     "sql-query": "0.1.27"
