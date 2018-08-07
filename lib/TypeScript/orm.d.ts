@@ -1,6 +1,6 @@
 ﻿/// <reference path="sql-query.d.ts" />
 
-declare module "orm" {
+declare module 'orm' {
 
     import events = require('events');
     import sqlquery = require('sqlquery');
@@ -8,74 +8,95 @@ declare module "orm" {
     module orm {
 
         /**
-        * Parameter Type Interfaces
-        **/
+         * Parameter Type Interfaces
+         **/
 
         export interface Model {
+            properties: {[property: string]: Property};
+            settings: Settings;
+            table: string;
+            id: string[];
+
             (): Instance;
+
             (...ids: any[]): Instance;
 
-            properties: { [property: string]: Property };
-            settings: Settings;
-
             drop(callback?: (err: Error) => void): Model;
+
             sync(callback?: (err: Error) => void): Model;
+
             get(...args: any[]): Model;
-            find(conditions: { [property: string]: any }, callback: (err: Error, results: Instance[]) => void): Model;
-            find(conditions: { [property: string]: any }, options: {
+
+            find(conditions: {[property: string]: any}, callback: (err: Error, results: Instance[]) => void): Model;
+
+            find(conditions: {[property: string]: any}, options: {
                 limit?: number;
                 order?: any;
             }, callback: (err: Error, results: Instance[]) => void): Model;
-            find(conditions: { [property: string]: any }, limit: number, order: string[], callback: (err: Error, results: Instance[]) => void): Model;
-            find(conditions: { [property: string]: any }): IChainFind;
 
-            all(conditions: { [property: string]: any }, callback: (err: Error, results: Instance[]) => void): Model;
-            all(conditions: { [property: string]: any }, options: {
+            find(conditions: {[property: string]: any}, limit: number, order: string[], callback: (err: Error, results: Instance[]) => void): Model;
+
+            find(conditions: {[property: string]: any}): IChainFind;
+
+            all(conditions: {[property: string]: any}, callback: (err: Error, results: Instance[]) => void): Model;
+
+            all(conditions: {[property: string]: any}, options: {
                 limit?: number;
                 order?: any;
             }, callback: (err: Error, results: Instance[]) => void): Model;
-            all(conditions: { [property: string]: any }, limit: number, order: string[], callback: (err: Error, results: Instance[]) => void): Model;
 
-            one(conditions: { [property: string]: any }, callback: (err: Error, result: Instance) => void): Model;
-            one(conditions: { [property: string]: any }, options: {
+            all(conditions: {[property: string]: any}, limit: number, order: string[], callback: (err: Error, results: Instance[]) => void): Model;
+
+            one(conditions: {[property: string]: any}, callback: (err: Error, result: Instance) => void): Model;
+
+            one(conditions: {[property: string]: any}, options: {
                 limit?: number;
                 order?: any;
             }, callback: (err: Error, result: Instance) => void): Model;
-            one(conditions: { [property: string]: any }, limit: number, order: string[], callback: (err: Error, result: Instance) => void): Model;
+
+            one(conditions: {[property: string]: any}, limit: number, order: string[], callback: (err: Error, result: Instance) => void): Model;
 
             count(callback: (err: Error, count: number) => void): Model;
-            count(conditions: { [property: string]: any }, callback: (err: Error, count: number) => void): Model;
 
-            aggregate(conditions: { [property: string]: any }): IAggregated;
+            count(conditions: {[property: string]: any}, callback: (err: Error, count: number) => void): Model;
+
+            aggregate(conditions: {[property: string]: any}): IAggregated;
+
             aggregate(properties: string[]): IAggregated;
-            aggregate(conditions: { [property: string]: any }, properties: string[]): IAggregated;
+
+            aggregate(conditions: {[property: string]: any}, properties: string[]): IAggregated;
 
             exists(id: any, callback: (err: Error, exists: boolean) => void): Model;
+
             exists(...args: any[]): Model;
 
-            create(data: { [property: string]: any; }, callback: (err: Error, instance: Instance) => void): Model;
+            create(data: {[property: string]: any;}, callback: (err: Error, instance: Instance) => void): Model;
+
             create(...args: any[]): Model;
 
             clear(): Model;
-
-            table: string;
-            id: string[];
 
             [property: string]: any;
         }
 
         export interface Instance {
-            on(event: string, callback): Instance;
-            save(): Instance;
-            save(data: { [property: string]: any; }, callback: (err: Error) => void): Instance;
-            save(data: { [property: string]: any; }, options: any, callback: (err: Error) => void): Instance;
             saved: boolean;
-            remove(callback: (err: Error) => void): Instance;
             isInstance: boolean;
             isPersisted: boolean;
             isShell: boolean;
-            validate(callback: (errors: Error[]) => void);
             model: Model;
+
+            on(event: string, callback): Instance;
+
+            save(): Instance;
+
+            save(data: {[property: string]: any;}, callback: (err: Error) => void): Instance;
+
+            save(data: {[property: string]: any;}, options: any, callback: (err: Error) => void): Instance;
+
+            remove(callback: (err: Error) => void): Instance;
+
+            validate(callback: (errors: Error[]) => void);
 
             [property: string]: any;
         }
@@ -85,8 +106,8 @@ declare module "orm" {
             autoFetch?: boolean;
             autoFetchLimit?: number;
             cacheFetch?: boolean;
-            hooks?: { [property: string]: Hooks };
-            methods?: { [name: string]: Function };
+            hooks?: {[property: string]: Hooks};
+            methods?: {[name: string]: Function};
         }
 
         export interface Hooks {
@@ -115,35 +136,55 @@ declare module "orm" {
 
         export interface IAggregated {
             groupBy(...columns: string[]): IAggregated;
+
             limit(limit: number): IAggregated;
+
             limit(offset: number, limit: number): IAggregated;
+
             order(...order: string[]): IAggregated;
+
             select(columns: string[]): IAggregated;
+
             select(...columns: string[]): IAggregated;
+
             as(alias: string): IAggregated;
+
             call(fun: string, args: any[]): IAggregated;
+
             get(callback: (err: Error, instance: Instance) => void);
         }
 
         export interface IChainFind {
-            find(conditions: { [property: string]: any }): IChainFind;
+            find(conditions: {[property: string]: any}): IChainFind;
+
             only(...args: string[]): IChainFind;
+
             limit(limit: number): IChainFind;
+
             offset(offset: number): IChainFind;
+
             run(callback: (err: Error, results: Instance[]) => void): void;
+
             count(callback: (err: Error, count: number) => void): void;
+
             remove(callback: (err: Error) => void): void;
+
             save(callback: (err: Error) => void): void;
+
             each(callback: (result: Instance) => void): void;
+
             each(): IChainFind;
+
             filter(callback: (result: Instance) => boolean): IChainFind;
+
             sort(callback: (a: Instance, b: Instance) => boolean): IChainFind;
+
             get(callback: (results: Instance[]) => void): IChainFind;
         }
 
         /*
          * Classes
-        */
+         */
 
         export class ORM extends events.EventEmitter {
             validators: enforce;
@@ -152,43 +193,59 @@ declare module "orm" {
             driver_name: string;
             driver: any;
             tools: any;
-            models: { [key: string]: Model };
+            models: {[key: string]: Model};
             plugins: Plugin[];
 
             use(plugin: string, options?: any): ORM;
             use(plugin: Plugin, options?: any): ORM;
 
-            define(name: string, properties: { [key: string]: Property }, opts?: ModelOptions): Model;
+            define(name: string, properties: {[key: string]: Property}, opts?: ModelOptions): Model;
+
             ping(callback: (err: Error) => void): ORM;
+
             close(callback: (err: Error) => void): ORM;
+
             load(file: string, callback: (err: Error) => void): any;
+
             sync(callback: (err: Error) => void): ORM;
+
             drop(callback: (err: Error) => void): ORM;
         }
 
         export class enforce {
             static required(message?: string);
+
             static notEmptyString(message?: string);
+
             static rangeNumber(min: number, max: number, message?: string);
+
             static rangeLength(min: number, max: number, message?: string);
+
             static insideList(inside: string[], message?: string);
             static insideList(inside: number[], message?: string);
+
             static outsideList(outside: string[], message?: string);
             static outsideList(outside: number[], message?: string);
+
             static password(conditions?: string, message?: string);
+
             static patterns(expr: RegExp, message?: string);
             static patterns(expr: string, flags: string, message?: string);
+
             static equalToProperty(name: string, message?: string);
+
             static unique(message?: string);
-            static unique(opts: { ignoreCase: boolean }, message?: string);
+            static unique(opts: {ignoreCase: boolean}, message?: string);
         }
 
         export function equalToProperty(name: string, message?: string);
+
         export function unique(message?: string);
-        export function unique(opts: { ignoreCase: boolean }, message?: string);
+        export function unique(opts: {ignoreCase: boolean}, message?: string);
 
         export class singleton {
             static clear(key?: string): singleton;
+
             static get(key, opts: {
                 identityCache?: any;
                 saveCheck?: boolean;
@@ -197,6 +254,8 @@ declare module "orm" {
 
         export class Settings {
             static Container: any;
+
+            constructor(settings: any);
 
             static defaults(): {
                 properties: {
@@ -222,8 +281,6 @@ declare module "orm" {
                 };
             };
 
-            constructor(settings: any);
-
             //[key: string]: {
             //    get: (key, def) => any;
             //    set: (key, value) => Settings;
@@ -236,6 +293,7 @@ declare module "orm" {
 
         export class Property {
             static normalize(property: string, settings: Settings): any;
+
             static validate(value: any, property: string): any;
         }
 
@@ -252,19 +310,31 @@ declare module "orm" {
         }
 
         export function Text(type: string): sqlquery.TextQuery;
+
         export function eq(value: any): sqlquery.Comparator;
+
         export function ne(value: any): sqlquery.Comparator;
+
         export function gt(value: any): sqlquery.Comparator;
+
         export function gte(value: any): sqlquery.Comparator;
+
         export function lt(value: any): sqlquery.Comparator;
+
         export function lte(value: any): sqlquery.Comparator;
+
         export function like(value: string): sqlquery.Comparator;
+
         export function between(a: number, b: number): sqlquery.Comparator;
+
         export function not_between(a: number, b: number): sqlquery.Comparator;
+
         export function express(uri: string, handlers: {
-            define(db: ORM, models: { [key: string]: Model });
+            define(db: ORM, models: {[key: string]: Model});
         }): (req, res, next) => void;
+
         export function use(connection, protocol: string, options, callback: (err: Error, db?: ORM) => void);
+
         export function connect(uri: string): ORM;
         export function connect(uri: string, callback: (err: Error, db: ORM) => void);
         export function connect(options: IConnectionOptions): ORM;

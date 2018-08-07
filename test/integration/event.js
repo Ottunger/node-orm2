@@ -1,97 +1,98 @@
-var should   = require('should');
-var helper   = require('../support/spec_helper');
-var ORM      = require('../../');
+var should = require('should');
+var helper = require('../support/spec_helper');
+var ORM = require('../../');
 
-describe("Event", function() {
-  var db = null;
-  var Person = null;
+describe("Event", function () {
+    var db = null;
+    var Person = null;
 
-  var triggeredHooks = {};
+    var triggeredHooks = {};
 
-  var checkHook = function (hook) {
-    triggeredHooks[hook] = false;
+    var checkHook = function (hook) {
+        triggeredHooks[hook] = false;
 
-    return function () {
-      triggeredHooks[hook] = Date.now();
+        return function () {
+            triggeredHooks[hook] = Date.now();
+        };
     };
-  };
 
-  var setup = function (hooks) {
-    return function (done) {
-      Person = db.define("person", {
-        name   : { type: "text", required: true }
-      });
+    var setup = function (hooks) {
+        return function (done) {
+            Person = db.define("person", {
+                name: {type: "text", required: true}
+            });
 
-      return helper.dropSync(Person, done);
+            return helper.dropSync(Person, done);
+        };
     };
-  };
 
-  before(function (done) {
-    helper.connect(function (connection) {
-      db = connection;
+    before(function (done) {
+        helper.connect(function (connection) {
+            db = connection;
 
-      return done();
-    });
-  });
-
-  after(function () {
-    return db.close();
-  });
-
-  describe("save", function () {
-    before(setup());
-
-    it("should trigger when saving an instance", function (done) {
-      var triggered = false;
-      var John = new Person({
-        name : "John Doe"
-      });
-
-      John.on("save", function () {
-        triggered = true;
-      });
-
-      triggered.should.be.false;
-
-      John.save(function () {
-        triggered.should.be.true;
-
-        return done();
-      });
+            return done();
+        });
     });
 
-    it("should trigger when saving an instance even if it fails", function (done) {
-      var triggered = false;
-      var John = new Person();
-
-      John.on("save", function (err) {
-        triggered = true;
-
-        err.should.be.a.Object();
-        err.should.have.property("msg", "required");
-      });
-
-      triggered.should.be.false;
-
-      John.save(function () {
-        triggered.should.be.true;
-
-        return done();
-      });
+    after(function () {
+        return db.close();
     });
 
-    it("should be writable for mocking", function (done) {
-      var triggered = false;
-      var John = new Person();
+    describe("save", function () {
+        before(setup());
 
-      John.on = function(event, cb) {
-        triggered = true;
-      };
-      triggered.should.be.false;
+        it("should trigger when saving an instance", function (done) {
+            var triggered = false;
+            var John = new Person({
+                name: "John Doe"
+            });
 
-      John.on("mocked", function (err) {} );
-      triggered.should.be.true;
-      done();
+            John.on("save", function () {
+                triggered = true;
+            });
+
+            triggered.should.be.false;
+
+            John.save(function () {
+                triggered.should.be.true;
+
+                return done();
+            });
+        });
+
+        it("should trigger when saving an instance even if it fails", function (done) {
+            var triggered = false;
+            var John = new Person();
+
+            John.on("save", function (err) {
+                triggered = true;
+
+                err.should.be.a.Object();
+                err.should.have.property("msg", "required");
+            });
+
+            triggered.should.be.false;
+
+            John.save(function () {
+                triggered.should.be.true;
+
+                return done();
+            });
+        });
+
+        it("should be writable for mocking", function (done) {
+            var triggered = false;
+            var John = new Person();
+
+            John.on = function (event, cb) {
+                triggered = true;
+            };
+            triggered.should.be.false;
+
+            John.on("mocked", function (err) {
+            });
+            triggered.should.be.true;
+            done();
+        });
     });
-  });
 });
