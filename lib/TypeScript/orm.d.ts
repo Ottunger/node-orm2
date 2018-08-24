@@ -127,7 +127,7 @@ declare module 'orm' {
             host?: string;
             port?: number;
             auth?: string;
-            username?: string;
+            user?: string;
             password?: string;
             database?: string;
             pool?: boolean;
