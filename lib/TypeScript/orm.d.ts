@@ -130,7 +130,7 @@ declare module 'orm' {
             user?: string;
             password?: string;
             database?: string;
-            pool?: boolean;
+            query?: {pool?: boolean};
             debug?: boolean;
         }
 
