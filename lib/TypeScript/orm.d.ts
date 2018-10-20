@@ -269,6 +269,7 @@ declare module 'orm' {
                     identityCacheSaveCheck: boolean;
                     autoSave: boolean;
                     autoFetch: boolean;
+                    reverseAutoFetch: boolean;
                     autoFetchLimit: number;
                     cascadeRemove: boolean;
                     returnAllErrors: boolean;
