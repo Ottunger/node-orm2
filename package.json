@@ -50,12 +50,14 @@
     {
       "name": "Benjamin Pannell",
       "email": "admin@sierrasoftworks.com"
+    },
+    {
+      "name": "Grégoire Mathonet",
+      "email": "greg.mathonet@gmail.com"
     }
   ],
   "main": "./lib/ORM",
-  "scripts": {
-    "test": "make test"
-  },
+  "scripts": {},
   "engines": {
     "node": ">= 4.0.0"
   },
@@ -69,18 +71,5 @@
     "path-is-absolute": "1.0.1",
     "sql-ddl-sync": "0.3.14",
     "sql-query": "0.1.27"
-  },
-  "devDependencies": {
-    "chalk": "2.4.1",
-    "glob": "7.1.2",
-    "mocha": "5.2.0",
-    "mongodb": "1.4.10",
-    "mysql": "2.15.0",
-    "pg": "7.4.3",
-    "semver": "5.5.0",
-    "should": "13.2.1",
-    "sinon": "6.0.0",
-    "sqlite3": "4.0.1"
-  },
-  "optionalDependencies": {}
+  }
 }
