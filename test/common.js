@@ -1,6 +1,4 @@
 var common = exports;
-var path = require('path');
-var async = require('async');
 var _ = require('lodash');
 var util = require('util');
 var querystring = require('querystring');

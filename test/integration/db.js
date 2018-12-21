@@ -1,5 +1,4 @@
 var should = require('should');
-var path = require('path');
 var helper = require('../support/spec_helper');
 var sinon = require('sinon');
 var common = require('../common');

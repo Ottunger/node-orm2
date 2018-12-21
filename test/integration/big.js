@@ -1,8 +1,6 @@
 var async = require('async');
 var should = require('should');
 var helper = require('../support/spec_helper');
-var ORM = require('../../');
-var common = require('../common');
 
 describe("Big data sets", function () {
     var db = null;

@@ -1,5 +1,4 @@
 var should = require('should');
-var Promise = require('bluebird');
 var helper = require('../support/spec_helper');
 var common = require('../common');
 var ORM = require('../../');

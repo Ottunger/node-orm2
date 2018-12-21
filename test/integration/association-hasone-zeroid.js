@@ -1,8 +1,5 @@
-var _ = require('lodash');
 var should = require('should');
-var async = require('async');
 var helper = require('../support/spec_helper');
-var ORM = require('../../');
 
 describe("hasOne", function () {
     var db = null;

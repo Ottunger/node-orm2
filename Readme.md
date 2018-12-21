@@ -106,7 +106,7 @@ orm.connect("mysql://username:password@host/database", function (err, db) {
 ------
 ## Promise
 
-- Read documentation about [bluebird](http://bluebirdjs.com/docs/api-reference.html) `Promise` for more advanced knowledge how to use `Promises`.
+- Read documentation about [Promise](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Promise) `Promise` for more advanced knowledge how to use `Promises`.
 
 ### Connect
 

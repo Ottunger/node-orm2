@@ -61,12 +61,11 @@
   },
   "analyse": false,
   "dependencies": {
-    "async": "2.6.1",
-    "bluebird": "3.5.1",
+    "async": "3.0.1-0",
     "enforce": "0.1.7",
     "hat": "0.0.3",
-    "lodash": "4.17.10",
-    "node-uuid": "1.4.7",
+    "lodash": "4.17.11",
+    "node-uuid": "1.4.8",
     "path-is-absolute": "1.0.1",
     "sql-ddl-sync": "0.3.14",
     "sql-query": "0.1.27"

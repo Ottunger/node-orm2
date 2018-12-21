@@ -1,6 +1,5 @@
 var should = require('should');
 var helper = require('../support/spec_helper');
-var ORM = require('../../');
 
 describe("Event", function () {
     var db = null;

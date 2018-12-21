@@ -1,9 +1,7 @@
-var ORM = require('../../');
 var helper = require('../support/spec_helper');
 var should = require('should');
 var async = require('async');
 var common = require('../common');
-var _ = require('lodash');
 
 describe("hasOne", function () {
     var db = null;
