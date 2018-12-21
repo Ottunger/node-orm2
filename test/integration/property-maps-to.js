@@ -1,13 +1,13 @@
-var _ = require('lodash');
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
-var ORM = require('../../');
+const _ = require('lodash');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
+const ORM = require('../../');
 
 if (common.protocol() === "mongodb") return;
 
 describe("Property.mapsTo", function () {
-    var db = null;
+    let db = null;
 
     before(function (done) {
         helper.connect(function (connection) {
@@ -23,8 +23,8 @@ describe("Property.mapsTo", function () {
     });
 
     describe("normal", function () {
-        var Book = null;
-        var id1 = null, id2 = null;
+        let Book = null;
+        let id1 = null, id2 = null;
 
         before(function (done) {
             Book = db.define("book", {
@@ -135,8 +135,8 @@ describe("Property.mapsTo", function () {
     });
 
     describe("keys", function () {
-        var Person = null;
-        var id1 = null, id2 = null;
+        let Person = null;
+        let id1 = null, id2 = null;
 
         before(function (done) {
             Person = db.define("person", {

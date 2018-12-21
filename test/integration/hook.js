@@ -1,11 +1,11 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
+const should = require('should');
+const helper = require('../support/spec_helper');
 
 describe("Hook", function () {
-    var db = null;
-    var Person = null;
-    var triggeredHooks = {};
-    var getTimestamp; // Calling it 'getTime' causes strangeness.
+    let db = null;
+    let Person = null;
+    let triggeredHooks = {};
+    let getTimestamp; // Calling it 'getTime' causes strangeness.
 
     getTimestamp = function () {
         return Date.now();
@@ -17,7 +17,7 @@ describe("Hook", function () {
     //   getTimestamp = function () { return Date.now(); };
     // }
 
-    var checkHook = function (hook) {
+    const checkHook = function (hook) {
         triggeredHooks[hook] = false;
 
         return function () {
@@ -25,7 +25,7 @@ describe("Hook", function () {
         };
     };
 
-    var setup = function (hooks) {
+    const setup = function (hooks) {
         if (typeof hooks === "undefined") {
             hooks = {
                 afterCreate: checkHook("afterCreate"),
@@ -67,7 +67,7 @@ describe("Hook", function () {
         before(setup());
 
         it("can be changed", function (done) {
-            var triggered = false;
+            let triggered = false;
 
             Person.afterCreate(function () {
                 triggered = true;
@@ -80,7 +80,7 @@ describe("Hook", function () {
         });
 
         it("can be removed", function (done) {
-            var triggered = false;
+            let triggered = false;
 
             Person.afterCreate(function () {
                 triggered = true;
@@ -163,7 +163,7 @@ describe("Hook", function () {
         });
 
         describe("if hook method has 1 argument", function () {
-            var beforeCreate = false;
+            let beforeCreate = false;
 
             before(setup({
                 beforeCreate: function (next) {
@@ -279,7 +279,7 @@ describe("Hook", function () {
         });
 
         describe("if hook method has 1 argument", function () {
-            var beforeSave = false;
+            let beforeSave = false;
 
             before(setup({
                 beforeSave: function (next) {
@@ -413,7 +413,7 @@ describe("Hook", function () {
         });
 
         describe("if hook method has 1 argument", function () {
-            var beforeValidation = false;
+            let beforeValidation = false;
 
             before(setup({
                 beforeValidation: function (next) {
@@ -450,7 +450,7 @@ describe("Hook", function () {
             });
 
             it("should trigger when calling #validate", function (done) {
-                var person = new Person();
+                const person = new Person();
 
                 person.validate(function (err, validationErrors) {
                     beforeValidation.should.be.true;
@@ -462,7 +462,7 @@ describe("Hook", function () {
     });
 
     describe("afterLoad", function () {
-        var afterLoad = false;
+        let afterLoad = false;
 
         before(setup({
             afterLoad: function () {
@@ -471,7 +471,7 @@ describe("Hook", function () {
         }));
 
         it("should trigger when defining a model", function (done) {
-            var John = new Person({name: "John"});
+            const John = new Person({name: "John"});
 
             afterLoad.should.be.true;
 
@@ -479,7 +479,7 @@ describe("Hook", function () {
         });
 
         describe("if hook method has 1 argument", function () {
-            var afterLoad = false;
+            let afterLoad = false;
 
             before(setup({
                 afterLoad: function (next) {
@@ -519,7 +519,7 @@ describe("Hook", function () {
     });
 
     describe("afterAutoFetch", function () {
-        var afterAutoFetch = false;
+        let afterAutoFetch = false;
 
         before(setup({
             afterAutoFetch: function () {
@@ -528,7 +528,7 @@ describe("Hook", function () {
         }));
 
         it("should trigger when defining a model", function (done) {
-            var John = new Person({name: "John"});
+            const John = new Person({name: "John"});
 
             afterAutoFetch.should.be.true;
 
@@ -536,7 +536,7 @@ describe("Hook", function () {
         });
 
         describe("if hook method has 1 argument", function () {
-            var afterAutoFetch = false;
+            let afterAutoFetch = false;
 
             before(setup({
                 afterAutoFetch: function (next) {
@@ -591,7 +591,7 @@ describe("Hook", function () {
         });
 
         describe("if hook method has 1 argument", function () {
-            var beforeRemove = false;
+            let beforeRemove = false;
 
             before(setup({
                 beforeRemove: function (next) {

@@ -1,14 +1,14 @@
-var _ = require('lodash');
-var should = require('should');
-var Driver = require('../../../lib/Drivers/DML/postgres').Driver;
-var helper = require('../../support/spec_helper');
-var common = require('../../common');
+const _ = require('lodash');
+const should = require('should');
+const Driver = require('../../../lib/Drivers/DML/postgres').Driver;
+const helper = require('../../support/spec_helper');
+const common = require('../../common');
 
 if (common.protocol() !== "postgres") return;
 
 describe("Postgres driver", function () {
     describe("#valueToProperty", function () {
-        var driver = null;
+        let driver = null;
 
         beforeEach(function () {
             driver = new Driver({}, {}, {});
@@ -107,7 +107,7 @@ describe("Postgres driver", function () {
     describe("#propertyToValue", function () {
         describe("type object", function () {
             function evaluate(input) {
-                var driver = new Driver({}, {}, {});
+                const driver = new Driver({}, {}, {});
                 return driver.propertyToValue(input, {type: 'object'});
             }
 
@@ -116,13 +116,13 @@ describe("Postgres driver", function () {
             });
 
             it("should not change buffer", function () {
-                var b = new Buffer('abc');
+                const b = new Buffer('abc');
                 should.strictEqual(evaluate(b), b);
             });
 
             it("should encode everything else as a Buffer", function () {
-                var input = {abc: 123};
-                var out = evaluate(input);
+                const input = {abc: 123};
+                const out = evaluate(input);
 
                 should(out instanceof Buffer);
                 should.equal(JSON.stringify(input), out.toString());
@@ -132,14 +132,14 @@ describe("Postgres driver", function () {
         describe("date", function () {
             function evaluate(input, opts) {
                 if (!opts) opts = {};
-                var driver = new Driver(opts.config, {}, {});
+                const driver = new Driver(opts.config, {}, {});
                 return driver.propertyToValue(input, {type: 'date'});
             }
 
             it("should do nothing when timezone isn't configured", function () {
-                var input = new Date();
-                var inputStr = input.toString();
-                var out = evaluate(input);
+                const input = new Date();
+                const inputStr = input.toString();
+                const out = evaluate(input);
 
                 should.strictEqual(input, out);
                 should.equal(inputStr, out.toString());
@@ -167,12 +167,12 @@ describe("Postgres driver", function () {
 
         describe("type point", function () {
             function evaluate(input) {
-                var driver = new Driver({}, {}, {});
+                const driver = new Driver({}, {}, {});
                 return driver.propertyToValue(input, {type: 'point'});
             }
 
             it("should encode correctly", function () {
-                var out = evaluate({x: 5, y: 7});
+                const out = evaluate({x: 5, y: 7});
 
                 should(out instanceof Function);
                 should.equal(out(), "POINT(5, 7)");
@@ -180,16 +180,16 @@ describe("Postgres driver", function () {
         });
 
         describe("custom type", function () {
-            var customType = {
+            const customType = {
                 propertyToValue: function (input) {
                     return input + ' QWERTY';
                 }
             };
 
             function evaluate(input, customTypes) {
-                var driver = new Driver({}, {}, {});
+                const driver = new Driver({}, {}, {});
                 if (customType) {
-                    for (var k in customTypes) {
+                    for (let k in customTypes) {
                         driver.customTypes[k] = customTypes[k];
                     }
                 }
@@ -197,15 +197,15 @@ describe("Postgres driver", function () {
             }
 
             it("should do custom type conversion if provided", function () {
-                var opts = {qwerty: customType};
-                var out = evaluate('f', opts);
+                const opts = {qwerty: customType};
+                const out = evaluate('f', opts);
 
                 should.equal(out, 'f QWERTY');
             });
 
             it("should not do custom type conversion if not provided", function () {
-                var opts = {qwerty: {}};
-                var out = evaluate('f', opts);
+                const opts = {qwerty: {}};
+                const out = evaluate('f', opts);
 
                 should.equal(out, 'f');
             });
@@ -213,7 +213,7 @@ describe("Postgres driver", function () {
 
         it("should do nothing for other types", function () {
             function evaluate(input, type) {
-                var driver = new Driver({}, {}, {});
+                const driver = new Driver({}, {}, {});
                 return driver.propertyToValue(input, {type: type});
             }
 

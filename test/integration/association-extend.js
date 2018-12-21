@@ -1,13 +1,13 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var ORM = require('../../');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const ORM = require('../../');
 
 describe("Model.extendsTo()", function () {
-    var db = null;
-    var Person = null;
-    var PersonAddress = null;
+    let db = null;
+    const Person = null;
+    const PersonAddress = null;
 
-    var setup = function () {
+    const setup = function () {
         return function (done) {
             Person = db.define("person", {
                 name: String
@@ -78,7 +78,7 @@ describe("Model.extendsTo()", function () {
         });
 
         it("should return error if instance not with an ID", function (done) {
-            var Jane = new Person({
+            const Jane = new Person({
                 name: "Jane"
             });
             Jane.hasAddress(function (err, hasAddress) {
@@ -123,7 +123,7 @@ describe("Model.extendsTo()", function () {
         });
 
         it("should return error if instance not with an ID", function (done) {
-            var Jane = new Person({
+            const Jane = new Person({
                 name: "Jane"
             });
             Jane.getAddress(function (err, Address) {
@@ -146,7 +146,7 @@ describe("Model.extendsTo()", function () {
                     should.equal(err, null);
                     c.should.equal(1);
 
-                    var addr = new PersonAddress({
+                    const addr = new PersonAddress({
                         street: "4th Ave",
                         number: 4
                     });
@@ -183,7 +183,7 @@ describe("Model.extendsTo()", function () {
                     should.equal(err, null);
                     c.should.equal(1);
 
-                    var addr = new PersonAddress({
+                    const addr = new PersonAddress({
                         street: "4th Ave",
                         number: 4
                     });
@@ -203,7 +203,7 @@ describe("Model.extendsTo()", function () {
         });
 
         it("should return error if instance not with an ID", function (done) {
-            var Jane = new Person({
+            const Jane = new Person({
                 name: "Jane"
             });
             Jane.removeAddress(function (err) {
@@ -247,7 +247,7 @@ describe("Model.extendsTo()", function () {
         });
 
         it("should return error if instance not with an ID", function (done) {
-            var Jane = new Person({
+            const Jane = new Person({
                 name: "Jane"
             });
             Jane.hasAddressAsync().catch(function (err) {
@@ -289,7 +289,7 @@ describe("Model.extendsTo()", function () {
         });
 
         it("should return error if instance not with an ID", function (done) {
-            var Jane = new Person({
+            const Jane = new Person({
                 name: "Jane"
             });
             Jane.getAddressAsync().catch(function (err) {
@@ -311,7 +311,7 @@ describe("Model.extendsTo()", function () {
                     should.equal(err, null);
                     c.should.equal(1);
 
-                    var addr = new PersonAddress({
+                    const addr = new PersonAddress({
                         street: "4th Ave",
                         number: 4
                     });
@@ -345,7 +345,7 @@ describe("Model.extendsTo()", function () {
                     should.equal(err, null);
                     c.should.equal(1);
 
-                    var addr = new PersonAddress({
+                    const addr = new PersonAddress({
                         street: "4th Ave",
                         number: 4
                     });
@@ -366,7 +366,7 @@ describe("Model.extendsTo()", function () {
         });
 
         it("should return error if instance not with an ID", function (done) {
-            var Jane = new Person({
+            const Jane = new Person({
                 name: "Jane"
             });
             Jane.removeAddressAsync().catch(function (err) {
@@ -402,7 +402,7 @@ describe("Model.extendsTo()", function () {
         });
 
         it("should return a ChainFind if no callback passed", function (done) {
-            var ChainFind = Person.findByAddress({
+            const ChainFind = Person.findByAddress({
                 number: 123
             });
             ChainFind.run.should.be.a.Function();

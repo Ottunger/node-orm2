@@ -1,15 +1,15 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var ORM = require('../../');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const ORM = require('../../');
 
 describe("Smart types", function () {
-    var db = null;
-    var User = null;
-    var Profile = null;
-    var Post = null;
-    var Group = null;
+    let db = null;
+    const User = null;
+    const Profile = null;
+    const Post = null;
+    const Group = null;
 
-    var setup = function () {
+    const setup = function () {
         return function (done) {
             User = db.define("user", {
                 username: {type: 'text', size: 64},

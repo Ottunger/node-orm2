@@ -1,11 +1,11 @@
-var path = require('path');
-var express = require('express');
-var settings = require('./config/settings');
-var environment = require('./config/environment');
-var routes = require('./config/routes');
+const path = require('path');
+const express = require('express');
+const settings = require('./config/settings');
+const environment = require('./config/environment');
+const routes = require('./config/routes');
 
 module.exports.start = function (done) {
-    var app = express();
+    const app = express();
 
     environment(app);
     routes(app);

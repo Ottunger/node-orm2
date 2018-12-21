@@ -1,16 +1,16 @@
-var _ = require('lodash');
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
-var ORM = require('../../');
-var protocol = common.protocol();
+const _ = require('lodash');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
+const ORM = require('../../');
+const protocol = common.protocol();
 
 describe("Model.get()", function () {
-    var db = null;
-    var Person = null;
-    var John;
+    let db = null;
+    let Person = null;
+    let John;
 
-    var setup = function (identityCache) {
+    const setup = function (identityCache) {
         return function (done) {
             Person = db.define("person", {
                 name: {type: 'text', mapsTo: 'fullname'}
@@ -57,7 +57,7 @@ describe("Model.get()", function () {
         before(setup(true));
 
         it("should create the table with a different column name than property name", function (done) {
-            var sql;
+            let sql;
 
             if (protocol === 'sqlite') {
                 sql = "PRAGMA table_info(?)";
@@ -68,7 +68,7 @@ describe("Model.get()", function () {
             db.driver.execQuery(sql, [Person.table], function (err, data) {
                 should.not.exist(err);
 
-                var names = _.map(data, protocol === 'sqlite' ? 'name' : 'column_name');
+                const names = _.map(data, protocol === 'sqlite' ? 'name' : 'column_name');
 
                 should.equal(typeof Person.properties.name, 'object');
                 should.notEqual(names.indexOf('fullname'), -1);
@@ -298,7 +298,7 @@ describe("Model.get()", function () {
         it("should search by key name and not 'id'", function (done) {
             db.settings.set('properties.primary_key', 'name');
 
-            var OtherPerson = db.define("person", {
+            const OtherPerson = db.define("person", {
                 id: Number
             });
 

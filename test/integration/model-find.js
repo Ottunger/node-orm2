@@ -1,12 +1,12 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var ORM = require('../../');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const ORM = require('../../');
 
 describe("Model.find()", function () {
-    var db = null;
-    var Person = null;
+    let db = null;
+    const Person = null;
 
-    var setup = function () {
+    const setup = function () {
         return function (done) {
             Person = db.define("person", {
                 name: String,

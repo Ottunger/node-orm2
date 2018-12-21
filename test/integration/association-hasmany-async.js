@@ -1,12 +1,12 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
-var protocol = common.protocol();
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
+const protocol = common.protocol();
 
 describe("hasMany", function () {
-    var db = null;
-    var Person = null;
-    var Pet = null;
+    let db = null;
+    const Person = null;
+    const Pet = null;
 
     before(function (done) {
         helper.connect(function (connection) {
@@ -17,7 +17,7 @@ describe("hasMany", function () {
 
     describe("normal", function () {
 
-        var setup = function (opts) {
+        const setup = function (opts) {
             opts = opts || {};
 
             return function (done) {
@@ -346,7 +346,7 @@ describe("hasMany", function () {
                         return [Jane, Deco, Jane.getPetsAsync()]
                     })
                     .spread(function (Jane, Deco, janesPets) {
-                        var petsAtStart = janesPets.length;
+                        const petsAtStart = janesPets.length;
 
                         return [petsAtStart, Jane, Jane.addPetsAsync(Deco)];
                     })
@@ -387,7 +387,7 @@ describe("hasMany", function () {
                         return [pets, Justin, Justin.getPetsAsync()];
                     })
                     .spread(function (pets, Justin, justinsPets) {
-                        var petCount = justinsPets.length;
+                        const petCount = justinsPets.length;
 
                         return [Justin, petCount, Justin.addPetsAsync(pets)];
                     })
@@ -460,7 +460,7 @@ describe("hasMany", function () {
             it("clears current associations", function () {
                 return Pet.findAsync({name: "Deco"})
                     .then(function (pets) {
-                        var Deco = pets[0];
+                        const Deco = pets[0];
 
                         return [Deco, Person.find({name: "Jane"}).firstAsync()];
                     })

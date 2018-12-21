@@ -1,12 +1,12 @@
-var chalk = require("chalk");
-var Mocha = require("mocha");
-var glob = require("glob");
-var path = require("path");
-var common = require("./common");
-var logging = require("./logging");
+const chalk = require("chalk");
+const Mocha = require("mocha");
+const glob = require("glob");
+const path = require("path");
+const common = require("./common");
+const logging = require("./logging");
 
-var location = path.normalize(path.join(__dirname, "integration", "**", "*.js"));
-var mocha = new Mocha({
+const location = path.normalize(path.join(__dirname, "integration", "**", "*.js"));
+const mocha = new Mocha({
     reporter: "progress",
     timeout: 15000
 });
@@ -43,9 +43,9 @@ function runTests() {
 }
 
 function shouldRunTest(file) {
-    var name = path.basename(file).slice(0, -3);
-    var proto = common.protocol();
-    var exclude = ['model-aggregate', 'property-number-size', 'smart-types'];
+    const name = path.basename(file).slice(0, -3);
+    const proto = common.protocol();
+    const exclude = ['model-aggregate', 'property-number-size', 'smart-types'];
 
     if (proto === "mongodb" && exclude.indexOf(name) >= 0) return false;
 

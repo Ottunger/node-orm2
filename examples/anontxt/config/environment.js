@@ -1,7 +1,7 @@
-var path = require('path');
-var express = require('express');
-var settings = require('./settings');
-var models = require('../app/models/');
+const path = require('path');
+const express = require('express');
+const settings = require('./settings');
+const models = require('../app/models/');
 
 module.exports = function (app) {
     app.configure(function () {

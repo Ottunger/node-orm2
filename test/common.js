@@ -1,9 +1,9 @@
-var common = exports;
-var _ = require('lodash');
-var util = require('util');
-var querystring = require('querystring');
-var Semver = require('semver');
-var ORM = require('../');
+const common = exports;
+const _ = require('lodash');
+const util = require('util');
+const querystring = require('querystring');
+const Semver = require('semver');
+const ORM = require('../');
 
 common.ORM = ORM;
 
@@ -20,7 +20,7 @@ common.createConnection = function (opts, cb) {
 };
 
 common.hasConfig = function (proto) {
-    var config;
+    let config;
 
     if (common.isTravis()) return 'found';
 
@@ -49,7 +49,7 @@ common.getConfig = function () {
                 throw new Error("Unknown protocol");
         }
     } else {
-        var config = require("./config")[this.protocol()];
+        let config = require("./config")[this.protocol()];
         if (typeof config === "string") {
             config = require("url").parse(config);
         }
@@ -71,9 +71,9 @@ common.getConfig = function () {
 };
 
 common.getConnectionString = function (opts) {
-    var config = this.getConfig();
-    var protocol = this.protocol();
-    var query;
+    const config = this.getConfig();
+    let protocol = this.protocol();
+    let query;
 
     _.defaults(config, {
         user: {postgres: 'postgres', redshift: 'postgres', mongodb: ''}[protocol] || 'root',
@@ -112,7 +112,7 @@ common.getConnectionString = function (opts) {
 
 common.retry = function (before, run, until, done, args) {
     if (typeof until === "number") {
-        var countDown = until;
+        let countDown = until;
         until = function (err) {
             if (err && --countDown > 0) return false;
             return true;
@@ -121,14 +121,14 @@ common.retry = function (before, run, until, done, args) {
 
     if (typeof args === "undefined") args = [];
 
-    var handler = function (err) {
+    const handler = function (err) {
         if (until(err)) return done.apply(this, arguments);
         return runNext();
     };
 
     args.push(handler);
 
-    var runCurrent = function () {
+    const runCurrent = function () {
         if (run.length === args.length) {
             return run.apply(this, args);
         } else {

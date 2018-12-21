@@ -1,14 +1,14 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
-var ORM = require('../../');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
+const ORM = require('../../');
 
 describe("Model instance", function () {
-    var db = null;
-    var Person = null;
-    var protocol = common.protocol();
+    let db = null;
+    const Person = null;
+    const protocol = common.protocol();
 
-    var setup = function () {
+    const setup = function () {
         return function (done) {
             db.settings.set('instance.returnAllErrors', true);
 
@@ -53,7 +53,7 @@ describe("Model instance", function () {
     });
 
     describe("#save", function () {
-        var main_item, item;
+        let main_item, item;
 
         before(function (done) {
             main_item = db.define("main_item", {
@@ -141,8 +141,8 @@ describe("Model instance", function () {
         });
 
         it("should be writable for mocking", function () {
-            var person = new Person();
-            var triggered = false;
+            const person = new Person();
+            let triggered = false;
             person.isPersisted = function () {
                 triggered = true;
             };
@@ -152,8 +152,8 @@ describe("Model instance", function () {
     });
 
     describe("#set", function () {
-        var person = null;
-        var data = null;
+        let person = null;
+        let data = null;
 
         function clone(obj) {
             return JSON.parse(JSON.stringify(obj))
@@ -196,7 +196,7 @@ describe("Model instance", function () {
             should.equal(person.saved(), true);
             person.set('data.e', 5);
 
-            var expected = clone(data);
+            const expected = clone(data);
             expected.e = 5;
 
             should.equal(JSON.stringify(person.data), JSON.stringify(expected));
@@ -207,7 +207,7 @@ describe("Model instance", function () {
             should.equal(person.saved(), true);
             person.set('data.e', 6);
 
-            var expected = clone(data);
+            const expected = clone(data);
             expected.e = 6;
 
             should.equal(JSON.stringify(person.data), JSON.stringify(expected));
@@ -219,7 +219,7 @@ describe("Model instance", function () {
             should.equal(person.saved(), true);
             person.set('data.a.b.d', 4);
 
-            var expected = clone(data);
+            const expected = clone(data);
             expected.a.b.d = 4;
 
             should.equal(JSON.stringify(person.data), JSON.stringify(expected));
@@ -230,7 +230,7 @@ describe("Model instance", function () {
             should.equal(person.saved(), true);
             person.set('data.a.b.d', 6);
 
-            var expected = clone(data);
+            const expected = clone(data);
             expected.a.b.d = 6;
 
             should.equal(JSON.stringify(person.data), JSON.stringify(expected));
@@ -242,7 +242,7 @@ describe("Model instance", function () {
             should.equal(person.saved(), true);
             person.set(['data', 'a', 'b', 'd'], 6);
 
-            var expected = clone(data);
+            const expected = clone(data);
             expected.a.b.d = 6;
 
             should.equal(JSON.stringify(person.data), JSON.stringify(expected));
@@ -263,7 +263,7 @@ describe("Model instance", function () {
     });
 
     describe("#markAsDirty", function () {
-        var person = null;
+        let person = null;
 
         beforeEach(function (done) {
             Person.create({name: 'John', age: 44, data: {a: 1}}, function (err, p) {
@@ -285,7 +285,7 @@ describe("Model instance", function () {
     });
 
     describe("#dirtyProperties", function () {
-        var person = null;
+        let person = null;
 
         beforeEach(function (done) {
             Person.create({name: 'John', age: 44, data: {a: 1}}, function (err, p) {
@@ -325,7 +325,7 @@ describe("Model instance", function () {
 
     describe("#validate", function () {
         it("should return validation errors if invalid", function (done) {
-            var person = new Person({age: -1});
+            const person = new Person({age: -1});
 
             person.validate(function (err, validationErrors) {
                 should.not.exist(err);
@@ -336,7 +336,7 @@ describe("Model instance", function () {
         });
 
         it("should return false if valid", function (done) {
-            var person = new Person({name: 'Janette'});
+            const person = new Person({name: 'Janette'});
 
             person.validate(function (err, validationErrors) {
                 should.not.exist(err);
@@ -347,7 +347,7 @@ describe("Model instance", function () {
         });
 
         it("should return validation errors if invalid (promise-based)", function () {
-            var person = new Person({age: -1});
+            const person = new Person({age: -1});
 
             return person.validateAsync()
                 .then(function (validationErrors) {
@@ -356,7 +356,7 @@ describe("Model instance", function () {
         });
 
         it("should return false if valid (promise-based)", function () {
-            var person = new Person({name: 'Janette'});
+            const person = new Person({name: 'Janette'});
 
             return person.validateAsync()
                 .then(function (validationErrors) {
@@ -369,7 +369,7 @@ describe("Model instance", function () {
     describe("properties", function () {
         describe("Number", function () {
             it("should be saved for valid numbers, using both save & create", function (done) {
-                var person1 = new Person({height: 190});
+                const person1 = new Person({height: 190});
 
                 person1.save(function (err) {
                     should.not.exist(err);
@@ -392,7 +392,7 @@ describe("Model instance", function () {
             });
 
             it("should be saved for valid numbers, using both save & create (promise-based)", function () {
-                var person1 = new Person({height: 190});
+                const person1 = new Person({height: 190});
 
                 return person1.saveAsync().then(function () {
                     return Person.createAsync({height: 170})
@@ -413,11 +413,11 @@ describe("Model instance", function () {
                 // Only postgres raises propper errors.
                 // Sqlite & Mysql fail silently and insert nulls.
                 it("should raise an error for NaN integers", function (done) {
-                    var person = new Person({height: NaN});
+                    const person = new Person({height: NaN});
 
                     person.save(function (err) {
                         should.exist(err);
-                        var msg = {
+                        const msg = {
                             postgres: 'invalid input syntax for integer: "NaN"'
                         }[protocol];
 
@@ -428,11 +428,11 @@ describe("Model instance", function () {
                 });
 
                 it("should raise an error for Infinity integers", function (done) {
-                    var person = new Person({height: Infinity});
+                    const person = new Person({height: Infinity});
 
                     person.save(function (err) {
                         should.exist(err);
-                        var msg = {
+                        const msg = {
                             postgres: 'invalid input syntax for integer: "Infinity"'
                         }[protocol];
 
@@ -443,11 +443,11 @@ describe("Model instance", function () {
                 });
 
                 it("should raise an error for nonsensical integers, for both save & create", function (done) {
-                    var person = new Person({height: 'bugz'});
+                    const person = new Person({height: 'bugz'});
 
                     person.save(function (err) {
                         should.exist(err);
-                        var msg = {
+                        const msg = {
                             postgres: 'invalid input syntax for integer: "bugz"'
                         }[protocol];
 
@@ -463,11 +463,11 @@ describe("Model instance", function () {
                 });
 
                 it("should raise an error for NaN integers (promise-based)", function () {
-                    var person = new Person({height: NaN});
+                    const person = new Person({height: NaN});
 
                     return person.saveAsync()
                         .catch(function (err) {
-                            var msg = {
+                            const msg = {
                                 postgres: 'invalid input syntax for integer: "NaN"'
                             }[protocol];
 
@@ -476,12 +476,12 @@ describe("Model instance", function () {
                 });
 
                 it("should raise an error for Infinity integers (promise-based)", function () {
-                    var person = new Person({height: Infinity});
+                    const person = new Person({height: Infinity});
 
                     return person.saveAsync()
                         .catch(function (err) {
                             should.exist(err);
-                            var msg = {
+                            const msg = {
                                 postgres: 'invalid input syntax for integer: "Infinity"'
                             }[protocol];
 
@@ -490,8 +490,8 @@ describe("Model instance", function () {
                 });
 
                 it("should raise an error for nonsensical integers, for both save & create (promise-based)", function () {
-                    var person = new Person({height: 'bugz'});
-                    var msg = {
+                    const person = new Person({height: 'bugz'});
+                    const msg = {
                         postgres: 'invalid input syntax for integer: "bugz"'
                     }[protocol];
 
@@ -512,7 +512,7 @@ describe("Model instance", function () {
             if (protocol !== 'mysql') {
                 // Mysql doesn't support IEEE floats (NaN, Infinity, -Infinity)
                 it("should store NaN & Infinite floats", function (done) {
-                    var person = new Person({weight: NaN});
+                    const person = new Person({weight: NaN});
 
                     person.save(function (err) {
                         should.not.exist(err);
@@ -536,7 +536,7 @@ describe("Model instance", function () {
                 });
 
                 it("should store NaN & Infinite floats (promise-based)", function () {
-                    var person = new Person({weight: NaN});
+                    const person = new Person({weight: NaN});
 
                     return person.saveAsync()
                         .then(function () {
@@ -562,7 +562,7 @@ describe("Model instance", function () {
                 Person.create({name: 'Dilbert', secret: 'dogbert', weight: 100, data: {data: 3}}, function (err, p) {
                     if (err) return done(err);
 
-                    var result = JSON.parse(JSON.stringify(p));
+                    const result = JSON.parse(JSON.stringify(p));
                     should.not.exist(result.secret);
                     should.exist(result.weight);
                     should.exist(result.data);
@@ -574,7 +574,7 @@ describe("Model instance", function () {
         });
 
         describe("#removeAsync", function () {
-            var main_item, item;
+            let main_item, item;
 
             before(function (done) {
                 main_item = db.define("main_item", {

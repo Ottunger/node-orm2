@@ -1,7 +1,7 @@
 module.exports = {
     formatErrors: function (errorsIn) {
-        var errors = {};
-        var a, e;
+        const errors = {};
+        let a, e;
 
         for (a = 0; a < errorsIn.length; a++) {
             e = errorsIn[a];

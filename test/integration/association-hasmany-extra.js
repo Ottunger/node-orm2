@@ -1,12 +1,12 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
+const should = require('should');
+const helper = require('../support/spec_helper');
 
 describe("hasMany extra properties", function () {
-    var db = null;
-    var Person = null;
-    var Pet = null;
+    let db = null;
+    const Person = null;
+    const Pet = null;
 
-    var setup = function (opts) {
+    const setup = function (opts) {
         opts = opts || {};
         return function (done) {
             db.settings.set('instance.identityCache', false);
@@ -45,7 +45,7 @@ describe("hasMany extra properties", function () {
                 }, {
                     name: "Mutt"
                 }], function (err, pets) {
-                    var data = {adopted: true};
+                    const data = {adopted: true};
 
                     people[0].addPets(pets, {since: new Date(), data: data}, function (err) {
                         should.equal(err, null);
@@ -90,7 +90,7 @@ describe("hasMany extra properties", function () {
                     }])];
                 })
                 .spread(function (people, pets) {
-                    var data = {adopted: true};
+                    const data = {adopted: true};
 
                     return [pets, data, people[0].addPetsAsync(pets, {since: new Date(), data: data})];
                 })

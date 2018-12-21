@@ -1,7 +1,7 @@
-var moment = require('moment');
+const moment = require('moment');
 
 module.exports = function (orm, db) {
-    var Comment = db.define('comment', {
+    const Comment = db.define('comment', {
             body: {type: 'text', required: true},
             createdAt: {type: 'date', required: true, time: true}
         },

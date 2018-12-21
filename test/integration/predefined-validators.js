@@ -1,9 +1,9 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var validators = require('../../').validators;
-var common = require('../common');
-var protocol = common.protocol().toLowerCase();
-var undef = undefined;
+const should = require('should');
+const helper = require('../support/spec_helper');
+const validators = require('../../').validators;
+const common = require('../common');
+const protocol = common.protocol().toLowerCase();
+const undef = undefined;
 
 function checkValidation(done, expected) {
     return function (returned) {
@@ -30,10 +30,10 @@ describe("Predefined Validators", function () {
     describe("unique()", function () {
         if (protocol === "mongodb") return;
 
-        var db = null;
-        var Person = null;
+        let db = null;
+        const Person = null;
 
-        var setup = function () {
+        const setup = function () {
             return function (done) {
                 Person = db.define("person", {
                     name: String,
@@ -68,7 +68,7 @@ describe("Predefined Validators", function () {
         });
 
         it("should not pass if more elements with that property exist", function (done) {
-            var janeDoe = new Person({
+            const janeDoe = new Person({
                 name: "Jane",
                 surname: "Doe" // <-- in table already!
             });
@@ -83,7 +83,7 @@ describe("Predefined Validators", function () {
         });
 
         it("should pass if no more elements with that property exist", function (done) {
-            var janeDean = new Person({
+            const janeDean = new Person({
                 name: "Jane",
                 surname: "Dean" // <-- not in table
             });

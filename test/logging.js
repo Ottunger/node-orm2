@@ -1,12 +1,12 @@
-var util = require("util");
+const util = require("util");
 
 exports.info = buildMethod(process.stdout, "[i]", 34);
 exports.error = buildMethod(process.stderr, "[!]", 31);
 
 function buildMethod(stream, prefix, color) {
     return function () {
-        var params = Array.prototype.slice.apply(arguments);
-        var text = params.shift();
+        const params = Array.prototype.slice.apply(arguments);
+        const text = params.shift();
 
         return printTo(stream, prefix + " ", color, text, params);
     };

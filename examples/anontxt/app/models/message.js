@@ -1,7 +1,7 @@
-var moment = require('moment');
+const moment = require('moment');
 
 module.exports = function (orm, db) {
-    var Message = db.define('message', {
+    const Message = db.define('message', {
             title: {type: 'text', required: true},
             body: {type: 'text', required: true, big: true},
             createdAt: {type: 'date', required: true, time: true}
@@ -24,7 +24,7 @@ module.exports = function (orm, db) {
             },
             methods: {
                 serialize: function () {
-                    var comments;
+                    let comments;
 
                     if (this.comments) {
                         comments = this.comments.map(function (c) {

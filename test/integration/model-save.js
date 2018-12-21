@@ -1,12 +1,12 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
 
 describe("Model.save()", function () {
-    var db = null;
-    var Person = null;
+    let db = null;
+    const Person = null;
 
-    var setup = function (nameDefinition, opts) {
+    const setup = function (nameDefinition, opts) {
         opts = opts || {};
 
         return function (done) {
@@ -41,7 +41,7 @@ describe("Model.save()", function () {
         before(setup({type: "text", defaultValue: "John"}));
 
         it("should use it if not defined", function (done) {
-            var John = new Person();
+            const John = new Person();
 
             John.save(function (err) {
                 should.equal(err, null);
@@ -56,7 +56,7 @@ describe("Model.save()", function () {
         before(setup());
 
         it("should save item and return id", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "John"
             });
             John.save(function (err) {
@@ -79,7 +79,7 @@ describe("Model.save()", function () {
         before(setup());
 
         it("should still save item and return id", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "John"
             });
             John.save();
@@ -103,7 +103,7 @@ describe("Model.save()", function () {
         before(setup());
 
         it("should update properties, save item and return id", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "Jane"
             });
             John.save({name: "John"}, function (err) {
@@ -127,7 +127,7 @@ describe("Model.save()", function () {
         before(setup());
 
         it("should should throw", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "Jane"
             });
             (function () {
@@ -142,10 +142,10 @@ describe("Model.save()", function () {
         before(setup());
 
         it("should save association first and then save item and return id", function (done) {
-            var Jane = new Person({
+            const Jane = new Person({
                 name: "Jane"
             });
-            var John = new Person({
+            const John = new Person({
                 name: "John",
                 parent: Jane
             });
@@ -166,7 +166,7 @@ describe("Model.save()", function () {
         before(setup());
 
         it("should save association first and then save item and return id", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "John",
                 parent: {
                     name: "Jane"
@@ -190,7 +190,7 @@ describe("Model.save()", function () {
         before(setup(null, {autoSave: true}));
 
         it("should save the instance as soon as a property is changed", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "Jhon"
             });
             John.save(function (err) {
@@ -206,7 +206,7 @@ describe("Model.save()", function () {
     });
 
     describe("with saveAssociations", function () {
-        var afterSaveCalled = false;
+        let afterSaveCalled = false;
 
         if (common.protocol() === 'mongodb') return;
 
@@ -216,7 +216,7 @@ describe("Model.save()", function () {
                     afterSaveCalled = true;
                 }
 
-                var hooks = {afterSave: afterSave};
+                const hooks = {afterSave: afterSave};
 
                 setup(null, {hooks: hooks, cache: false, hasOneOpts: {autoFetch: true}})(function (err) {
                     should.not.exist(err);
@@ -330,7 +330,7 @@ describe("Model.save()", function () {
                     afterSaveCalled = true;
                 }
 
-                var hooks = {afterSave: afterSave};
+                const hooks = {afterSave: afterSave};
 
                 setup(null, {
                     hooks: hooks, cache: false, hasOneOpts: {autoFetch: true},
@@ -430,7 +430,7 @@ describe("Model.save()", function () {
 
         it("should save the instance as a geospatial point", function (done) {
             setup({type: "point"}, null)(function () {
-                var John = new Person({
+                const John = new Person({
                     name: {x: 51.5177, y: -0.0968}
                 });
                 John.save(function (err) {
@@ -449,10 +449,10 @@ describe("Model.save()", function () {
         before(setup());
 
         it("save should be writable", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "John"
             });
-            var saveCalled = false;
+            let saveCalled = false;
             John.save = function (cb) {
                 saveCalled = true;
                 cb(null);
@@ -464,10 +464,10 @@ describe("Model.save()", function () {
         });
 
         it("saved should be writable", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "John"
             });
-            var savedCalled = false;
+            let savedCalled = false;
             John.saved = function () {
                 savedCalled = true;
                 return true;

@@ -1,10 +1,10 @@
-var _ = require('lodash');
-var helpers = require('./_helpers');
-var orm = require('../../../../');
+const _ = require('lodash');
+const helpers = require('./_helpers');
+const orm = require('../../../../');
 
 module.exports = {
     create: function (req, res, next) {
-        var params = _.pick(req.body, 'author', 'body');
+        const params = _.pick(req.body, 'author', 'body');
 
         req.models.message.get(req.params.messageId, function (err, message) {
             if (err) {

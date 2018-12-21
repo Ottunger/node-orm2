@@ -1,15 +1,15 @@
-var async = require('async');
-var should = require('should');
-var helper = require('../support/spec_helper');
-var ORM = require('../../');
-var common = require('../common');
+const async = require('async');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const ORM = require('../../');
+const common = require('../common');
 
 describe("Model.find() chaining", function () {
-    var db = null;
-    var Person = null;
-    var Dog = null;
+    let db = null;
+    const Person = null;
+    const Dog = null;
 
-    var setup = function (extraOpts) {
+    const setup = function (extraOpts) {
         if (!extraOpts) extraOpts = {};
 
         return function (done) {
@@ -44,7 +44,7 @@ describe("Model.find() chaining", function () {
         };
     };
 
-    var setup2 = function () {
+    const setup2 = function () {
         return function (done) {
             Dog = db.define("dog", {
                 name: String,
@@ -150,7 +150,7 @@ describe("Model.find() chaining", function () {
     });
 
     describe(".removeAsync()", function () {
-        var hookFired = false;
+        let hookFired = false;
 
         before(setup({
             hooks: {

@@ -1,14 +1,14 @@
-var _ = require('lodash');
-var should = require('should');
-var Driver = require('../../../lib/Drivers/DML/sqlite').Driver;
-var helper = require('../../support/spec_helper');
-var common = require('../../common');
+const _ = require('lodash');
+const should = require('should');
+const Driver = require('../../../lib/Drivers/DML/sqlite').Driver;
+const helper = require('../../support/spec_helper');
+const common = require('../../common');
 
 if (common.protocol() !== "sqlite") return;
 
 describe("Sqlite driver", function () {
     describe("#valueToProperty", function () {
-        var driver = null;
+        let driver = null;
 
         before(function () {
             driver = new Driver({}, {}, {});
@@ -74,33 +74,33 @@ describe("Sqlite driver", function () {
             });
 
             describe("date", function () {
-                var timezone = /GMT([+/-]\d{4})/.exec(new Date().toString())[1];
+                const timezone = /GMT([+/-]\d{4})/.exec(new Date().toString())[1];
 
                 function valueToProperty(value) {
                     return driver.valueToProperty(value, {type: 'date'});
                 }
 
                 it("should return origin object when given non-string", function () {
-                    var now = new Date();
+                    const now = new Date();
                     should.strictEqual(valueToProperty(now), now);
-                    var array = [];
+                    const array = [];
                     should.strictEqual(valueToProperty(array), array);
-                    var obj = {};
+                    const obj = {};
                     should.strictEqual(valueToProperty(obj), obj);
                 });
 
                 it("should pass on normal time", function () {
-                    var normal = '2017-12-07 00:00:00';
+                    const normal = '2017-12-07 00:00:00';
                     should.strictEqual(valueToProperty(normal).toString(), new Date(normal).toString());
                 });
 
                 it("should pass on utc time by orm saved with local config", function () {
-                    var utc = '2017-12-07T00:00:00';
+                    const utc = '2017-12-07T00:00:00';
                     should.strictEqual(valueToProperty(utc + 'Z').toString(), new Date(utc + timezone).toString());
                 });
 
                 it("should pass on utc time by orm saved with timezone config", function () {
-                    var utc = '2017-12-07T00:00:00';
+                    const utc = '2017-12-07T00:00:00';
                     driver.config.timezone = timezone;
                     should.strictEqual(valueToProperty(utc + 'Z').toString(), new Date(utc + timezone).toString());
                     driver.config.timezone = '';
@@ -110,8 +110,8 @@ describe("Sqlite driver", function () {
     });
 
     describe("db", function () {
-        var db = null;
-        var Person = null;
+        let db = null;
+        let Person = null;
 
         before(function (done) {
             helper.connect(function (connection) {

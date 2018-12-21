@@ -1,6 +1,6 @@
-var should = require('should');
-var ORM = require("../..");
-var Property = ORM.Property;
+const should = require('should');
+const ORM = require("../..");
+const Property = ORM.Property;
 
 describe("Property", function () {
     it("passing String should return type: 'text'", function (done) {
@@ -54,7 +54,7 @@ describe("Property", function () {
         return done();
     });
     it("passing an Array of items should return type: 'enum' with list of items", function (done) {
-        var prop = Property.normalize(
+        const prop = Property.normalize(
             {prop: [1, 2, 3], customTypes: {}, settings: ORM.settings, name: 'abc'}
         );
 
@@ -92,9 +92,9 @@ describe("Property", function () {
         });
     });
     it("should not modify the original property object", function (done) {
-        var original = {type: 'text', required: true};
+        const original = {type: 'text', required: true};
 
-        var normalized = Property.normalize(
+        const normalized = Property.normalize(
             {prop: original, customTypes: {}, settings: ORM.settings, name: 'abc'}
         );
 

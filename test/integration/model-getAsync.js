@@ -1,14 +1,14 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
-var ORM = require('../../');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
+const ORM = require('../../');
 
 describe("Model.getAsync()", function () {
-    var db = null;
-    var Person = null;
-    var John;
+    let db = null;
+    let Person = null;
+    let John;
 
-    var setup = function (identityCache) {
+    const setup = function (identityCache) {
         return function (done) {
             Person = db.define("person", {
                 name: {type: 'text', mapsTo: 'fullname'}
@@ -190,7 +190,7 @@ describe("Model.getAsync()", function () {
         it("should search by key name and not 'id'", function () {
             db.settings.set('properties.primary_key', 'name');
 
-            var OtherPerson = db.define("person", {
+            const OtherPerson = db.define("person", {
                 id: Number
             });
 

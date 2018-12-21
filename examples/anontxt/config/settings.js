@@ -1,6 +1,6 @@
-var path = require('path');
+const path = require('path');
 
-var settings = {
+const settings = {
     path: path.normalize(path.join(__dirname, '..')),
     port: process.env.NODE_PORT || 3000,
     database: {

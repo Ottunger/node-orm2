@@ -1,13 +1,13 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
 
 if (common.protocol() === "mongodb") return;   // Can't do mapsTo testing on mongoDB ()
 
 describe("hasMany with MapsTo Async", function () {
-    var db = null;
-    var Person = null;
-    var Pet = null;
+    let db = null;
+    const Person = null;
+    const Pet = null;
 
     before(function (done) {
         helper.connect(function (connection) {
@@ -16,7 +16,7 @@ describe("hasMany with MapsTo Async", function () {
         });
     });
 
-    var setup = function (opts) {
+    const setup = function (opts) {
         opts = opts || {};
 
         return function (done) {
@@ -285,7 +285,7 @@ describe("hasMany with MapsTo Async", function () {
                     return [Deco, Jane, Jane.getPetsAsync()];
                 })
                 .spread(function (Deco, Jane, janesPets) {
-                    var petsAtStart = janesPets.length;
+                    const petsAtStart = janesPets.length;
                     return [petsAtStart, Jane, Jane.addPetsAsync(Deco)];
                 })
                 .spread(function (petsAtStart, Jane) {
@@ -325,7 +325,7 @@ describe("hasMany with MapsTo Async", function () {
                     return [Justin, pets, Justin.getPetsAsync()];
                 })
                 .spread(function (Justin, pets, justinsPets) {
-                    var petCount = justinsPets.length;
+                    const petCount = justinsPets.length;
                     return [petCount, Justin, Justin.addPetsAsync(pets)];
                 })
                 .spread(function (petCount, Justin) {
@@ -407,7 +407,7 @@ describe("hasMany with MapsTo Async", function () {
         it("clears current associations", function () {
             return Pet.findAsync({petName: "Deco"})
                 .then(function (pets) {
-                    var Deco = pets[0];
+                    const Deco = pets[0];
 
                     return [Deco, Person.find({firstName: "Jane"}).firstAsync()];
                 })

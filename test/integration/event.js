@@ -1,13 +1,13 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
+const should = require('should');
+const helper = require('../support/spec_helper');
 
 describe("Event", function () {
-    var db = null;
-    var Person = null;
+    let db = null;
+    const Person = null;
 
-    var triggeredHooks = {};
+    const triggeredHooks = {};
 
-    var checkHook = function (hook) {
+    const checkHook = function (hook) {
         triggeredHooks[hook] = false;
 
         return function () {
@@ -15,7 +15,7 @@ describe("Event", function () {
         };
     };
 
-    var setup = function (hooks) {
+    const setup = function (hooks) {
         return function (done) {
             Person = db.define("person", {
                 name: {type: "text", required: true}
@@ -41,8 +41,8 @@ describe("Event", function () {
         before(setup());
 
         it("should trigger when saving an instance", function (done) {
-            var triggered = false;
-            var John = new Person({
+            let triggered = false;
+            const John = new Person({
                 name: "John Doe"
             });
 
@@ -60,8 +60,8 @@ describe("Event", function () {
         });
 
         it("should trigger when saving an instance even if it fails", function (done) {
-            var triggered = false;
-            var John = new Person();
+            let triggered = false;
+            const John = new Person();
 
             John.on("save", function (err) {
                 triggered = true;
@@ -80,8 +80,8 @@ describe("Event", function () {
         });
 
         it("should be writable for mocking", function (done) {
-            var triggered = false;
-            var John = new Person();
+            let triggered = false;
+            const John = new Person();
 
             John.on = function (event, cb) {
                 triggered = true;

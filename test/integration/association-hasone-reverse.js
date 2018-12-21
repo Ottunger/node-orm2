@@ -1,14 +1,14 @@
-var helper = require('../support/spec_helper');
-var should = require('should');
-var async = require('async');
-var common = require('../common');
+const helper = require('../support/spec_helper');
+const should = require('should');
+const async = require('async');
+const common = require('../common');
 
 describe("hasOne", function () {
-    var db = null;
-    var Person = null;
-    var Pet = null;
+    let db = null;
+    const Person = null;
+    const Pet = null;
 
-    var setup = function () {
+    const setup = function () {
         return function (done) {
             Person = db.define('person', {
                 name: String
@@ -52,8 +52,8 @@ describe("hasOne", function () {
         }));
 
         it("should create methods in both models", function (done) {
-            var person = Person(1);
-            var pet = Pet(1);
+            const person = Person(1);
+            const pet = Pet(1);
 
             person.getPet.should.be.a.Function();
             person.setPet.should.be.a.Function();
@@ -94,7 +94,7 @@ describe("hasOne", function () {
 
             describe("Chain", function () {
                 before(function (done) {
-                    var petParams = [
+                    const petParams = [
                         {name: "Hippo"},
                         {name: "Finch", owners: [{name: "Harold"}, {name: "Hagar"}]},
                         {name: "Fox", owners: [{name: "Nelly"}, {name: "Narnia"}]}
@@ -119,7 +119,7 @@ describe("hasOne", function () {
                         should.not.exist(err);
                         should.exist(pet);
 
-                        var chain = pet.getOwners();
+                        const chain = pet.getOwners();
 
                         should.equal(typeof chain, 'object');
                         should.equal(typeof chain.run, 'function');
@@ -170,7 +170,7 @@ describe("hasOne", function () {
                                 owners.length.should.equal(2);
 
                                 // Don't know which order they'll be in.
-                                var idProp = common.protocol() === 'mongodb' ? '_id' : 'id';
+                                const idProp = common.protocol() === 'mongodb' ? '_id' : 'id';
 
                                 if (owners[0][idProp] === ownersCopy[0][idProp]) {
                                     owners[0].should.eql(ownersCopy[0]);
@@ -231,7 +231,7 @@ describe("hasOne", function () {
                 });
 
                 it("should return a ChainFind if no callback passed", function (done) {
-                    var ChainFind = Pet.findByOwners({
+                    const ChainFind = Pet.findByOwners({
                         name: "John Doe"
                     });
                     ChainFind.run.should.be.a.Function();

@@ -1,10 +1,10 @@
-var async = require('async');
-var should = require('should');
-var helper = require('../support/spec_helper');
+const async = require('async');
+const should = require('should');
+const helper = require('../support/spec_helper');
 
 describe("Big data sets", function () {
-    var db = null;
-    var Like = null;
+    let db = null;
+    let Like = null;
 
     before(function (done) {
         helper.connect(function (connection) {

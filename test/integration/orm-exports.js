@@ -1,11 +1,11 @@
-var _ = require('lodash');
-var sqlite = require('sqlite3');
-var pg = require('pg');
-var should = require('should');
-var helper = require('../support/spec_helper');
-var ORM = require('../../');
-var common = require('../common');
-var protocol = common.protocol();
+const _ = require('lodash');
+const sqlite = require('sqlite3');
+const pg = require('pg');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const ORM = require('../../');
+const common = require('../common');
+const protocol = common.protocol();
 
 describe("ORM", function () {
     describe("when loaded", function () {
@@ -113,14 +113,14 @@ describe("ORM", function () {
         });
 
         it("should do not mutate opts", function () {
-            var opts = {
+            const opts = {
                 protocol: 'mysql',
                 user: 'notauser',
                 password: "wrong password",
                 query: {pool: true, debug: true}
             };
 
-            var expected = JSON.stringify(opts);
+            const expected = JSON.stringify(opts);
 
             return ORM.connectAsync(opts)
                 .catch(function () {
@@ -144,7 +144,7 @@ describe("ORM", function () {
         });
 
         describe('POOL via connectAsync', function () {
-            var connStr = null;
+            let connStr = null;
 
             beforeEach(function () {
                 connStr = common.getConnectionString();
@@ -156,7 +156,7 @@ describe("ORM", function () {
 
             if (protocol !== 'mongodb') {
                 it("should understand pool `'false'` from query string", function () {
-                    var connString = connStr + "debug=false&pool=false";
+                    const connString = connStr + "debug=false&pool=false";
                     return ORM.connectAsync(connString)
                         .then(function (db) {
                             should.strictEqual(db.driver.opts.pool, false);
@@ -165,7 +165,7 @@ describe("ORM", function () {
                 });
 
                 it("should understand pool `'0'` from query string", function () {
-                    var connString = connStr + "debug=0&pool=0";
+                    const connString = connStr + "debug=0&pool=0";
                     return ORM.connectAsync(connString)
                         .then(function (db) {
                             should.strictEqual(db.driver.opts.pool, false);
@@ -174,7 +174,7 @@ describe("ORM", function () {
                 });
 
                 it("should understand pool `'true'` from query string", function () {
-                    var connString = connStr + "debug=true&pool=true";
+                    const connString = connStr + "debug=true&pool=true";
                     return ORM.connectAsync(connString)
                         .then(function (db) {
                             should.strictEqual(db.driver.opts.pool, true);
@@ -183,7 +183,7 @@ describe("ORM", function () {
                 });
 
                 it("should understand pool `'true'` from query string", function () {
-                    var connString = connStr + "debug=1&pool=1";
+                    const connString = connStr + "debug=1&pool=1";
                     return ORM.connectAsync(connString)
                         .then(function (db) {
                             should.strictEqual(db.driver.opts.pool, true);
@@ -192,8 +192,8 @@ describe("ORM", function () {
                 });
 
                 it("should understand pool `'true'` from query string", function () {
-                    var connCopy = _.cloneDeep(common.getConfig());
-                    var connOpts = _.extend(connCopy, {
+                    const connCopy = _.cloneDeep(common.getConfig());
+                    const connOpts = _.extend(connCopy, {
                         protocol: common.protocol(),
                         query: {
                             pool: true, debug: true
@@ -208,8 +208,8 @@ describe("ORM", function () {
                 });
 
                 it("should understand pool `false` from query options", function () {
-                    var connCopy = _.cloneDeep(common.getConfig());
-                    var connOpts = _.extend(connCopy, {
+                    const connCopy = _.cloneDeep(common.getConfig());
+                    const connOpts = _.extend(connCopy, {
                         protocol: common.protocol(),
                         query: {
                             pool: false, debug: false
@@ -228,7 +228,7 @@ describe("ORM", function () {
 
     describe("ORM.connect()", function () {
         it("should expose .use(), .define(), .sync() and .load()", function (done) {
-            var db = ORM.connect();
+            const db = ORM.connect();
 
             db.use.should.be.a.Function();
             db.define.should.be.a.Function();
@@ -239,7 +239,7 @@ describe("ORM", function () {
         });
 
         it("should emit an error if no url is passed", function (done) {
-            var db = ORM.connect();
+            const db = ORM.connect();
 
             db.on("connect", function (err) {
                 err.message.should.equal("CONNECTION_URL_EMPTY");
@@ -250,7 +250,7 @@ describe("ORM", function () {
 
         it.skip("should allow protocol alias", function (done) {
             this.timeout(60000);
-            var db = ORM.connect("pg://127.0.0.6");
+            const db = ORM.connect("pg://127.0.0.6");
 
             db.once("connect", function (err) {
                 should.exist(err);
@@ -261,7 +261,7 @@ describe("ORM", function () {
         });
 
         it("should emit an error if empty url is passed", function (done) {
-            var db = ORM.connect("");
+            const db = ORM.connect("");
 
             db.on("connect", function (err) {
                 err.message.should.equal("CONNECTION_URL_EMPTY");
@@ -271,7 +271,7 @@ describe("ORM", function () {
         });
 
         it("should emit an error if empty url (with only spaces) is passed", function (done) {
-            var db = ORM.connect("   ");
+            const db = ORM.connect("   ");
 
             db.on("connect", function (err) {
                 err.message.should.equal("CONNECTION_URL_EMPTY");
@@ -281,7 +281,7 @@ describe("ORM", function () {
         });
 
         it("should emit an error if no protocol is passed", function (done) {
-            var db = ORM.connect("user@db");
+            const db = ORM.connect("user@db");
 
             db.on("connect", function (err) {
                 err.message.should.equal("CONNECTION_URL_NO_PROTOCOL");
@@ -291,7 +291,7 @@ describe("ORM", function () {
         });
 
         it("should emit an error if unknown protocol is passed", function (done) {
-            var db = ORM.connect("unknown://db");
+            const db = ORM.connect("unknown://db");
 
             db.on("connect", function (err) {
                 should.equal(err.literalCode, 'NO_SUPPORT');
@@ -305,7 +305,7 @@ describe("ORM", function () {
         });
 
         it("should emit an error if cannot connect", function (done) {
-            var db = ORM.connect("mysql://fakeuser:nopassword@127.0.0.1/unknowndb");
+            const db = ORM.connect("mysql://fakeuser:nopassword@127.0.0.1/unknowndb");
 
             db.on("connect", function (err) {
                 should.exist(err);
@@ -318,7 +318,7 @@ describe("ORM", function () {
         });
 
         it("should emit valid error if exception being thrown during connection try", function (done) {
-            var testConfig = {
+            const testConfig = {
                     protocol: 'mongodb',
                     href: 'unknownhost',
                     database: 'unknowndb',
@@ -338,14 +338,14 @@ describe("ORM", function () {
         });
 
         it("should not modify connection opts", function (done) {
-            var opts = {
+            const opts = {
                 protocol: 'mysql',
                 user: 'notauser',
                 password: "wrong password",
                 query: {pool: true, debug: true}
             };
 
-            var expected = JSON.stringify(opts);
+            const expected = JSON.stringify(opts);
 
             ORM.connect(opts, function (err, db) {
                 should.equal(
@@ -357,7 +357,7 @@ describe("ORM", function () {
         });
 
         it("should emit no error if ok", function (done) {
-            var db = ORM.connect(common.getConnectionString());
+            const db = ORM.connect(common.getConnectionString());
 
             db.on("connect", function (err) {
                 should.not.exist(err);
@@ -367,7 +367,7 @@ describe("ORM", function () {
         });
 
         describe("if no connection error", function () {
-            var db = null;
+            let db = null;
 
             before(function (done) {
                 helper.connect(function (connection) {
@@ -424,7 +424,7 @@ describe("ORM", function () {
 
         if (protocol !== 'mongodb') {
             describe("query options", function () {
-                var connStr = null;
+                let connStr = null;
 
                 beforeEach(function () {
                     connStr = common.getConnectionString();
@@ -434,7 +434,7 @@ describe("ORM", function () {
                     connStr = null
                 });
                 it("should understand pool `'false'` from query string", function (done) {
-                    var connString = connStr + "debug=false&pool=false";
+                    const connString = connStr + "debug=false&pool=false";
                     ORM.connect(connString, function (err, db) {
                         should.not.exist(err);
                         should.strictEqual(db.driver.opts.pool, false);
@@ -444,7 +444,7 @@ describe("ORM", function () {
                 });
 
                 it("should understand pool `'0'` from query string", function (done) {
-                    var connString = connStr + "debug=0&pool=0";
+                    const connString = connStr + "debug=0&pool=0";
                     ORM.connect(connString, function (err, db) {
                         should.not.exist(err);
                         should.strictEqual(db.driver.opts.pool, false);
@@ -454,7 +454,7 @@ describe("ORM", function () {
                 });
 
                 it("should understand pool `'true'` from query string", function (done) {
-                    var connString = connStr + "debug=true&pool=true";
+                    const connString = connStr + "debug=true&pool=true";
                     ORM.connect(connString, function (err, db) {
                         should.not.exist(err);
                         should.strictEqual(db.driver.opts.pool, true);
@@ -464,7 +464,7 @@ describe("ORM", function () {
                 });
 
                 it("should understand pool `'1'` from query string", function (done) {
-                    var connString = connStr + "debug=1&pool=1";
+                    const connString = connStr + "debug=1&pool=1";
                     ORM.connect(connString, function (err, db) {
                         should.not.exist(err);
                         should.strictEqual(db.driver.opts.pool, true);
@@ -474,8 +474,8 @@ describe("ORM", function () {
                 });
 
                 it("should understand pool `true` from query options", function (done) {
-                    var connCopy = _.cloneDeep(common.getConfig());
-                    var connOpts = _.extend(connCopy, {
+                    const connCopy = _.cloneDeep(common.getConfig());
+                    const connOpts = _.extend(connCopy, {
                         protocol: common.protocol(),
                         query: {
                             pool: true, debug: true
@@ -490,8 +490,8 @@ describe("ORM", function () {
                 });
 
                 it("should understand pool `false` from query options", function (done) {
-                    var connCopy = _.cloneDeep(common.getConfig());
-                    var connOpts = _.extend(connCopy, {
+                    const connCopy = _.cloneDeep(common.getConfig());
+                    const connOpts = _.extend(connCopy, {
                         protocol: common.protocol(),
                         query: {
                             pool: false, debug: false
@@ -510,7 +510,7 @@ describe("ORM", function () {
 
     describe("ORM.use()", function () {
         it("should be able to use an established connection", function (done) {
-            var db = new sqlite.Database(':memory:');
+            const db = new sqlite.Database(':memory:');
 
             ORM.use(db, "sqlite", function (err) {
                 should.not.exist(err);
@@ -520,7 +520,7 @@ describe("ORM", function () {
         });
 
         it("should be accept protocol alias", function (done) {
-            var db = new pg.Client();
+            const db = new pg.Client();
 
             ORM.use(db, "pg", function (err) {
                 should.equal(err, null);
@@ -530,7 +530,7 @@ describe("ORM", function () {
         });
 
         it("should return an error in callback if protocol not supported", function (done) {
-            var db = new pg.Client();
+            const db = new pg.Client();
 
             ORM.use(db, "unknowndriver", function (err) {
                 should.exist(err);
@@ -542,19 +542,19 @@ describe("ORM", function () {
 
     describe("ORM.useAsync()", function () {
         it("should be able to use an established connection", function () {
-            var db = new sqlite.Database(':memory:');
+            const db = new sqlite.Database(':memory:');
 
             return ORM.useAsync(db, "sqlite");
         });
 
         it("should be accept protocol alias", function () {
-            var db = new pg.Client();
+            const db = new pg.Client();
 
             return ORM.useAsync(db, "pg")
         });
 
         it("should throw an error in callback if protocol not supported", function () {
-            var db = new pg.Client();
+            const db = new pg.Client();
 
             return ORM.useAsync(db, "unknowndriver")
                 .catch(function (err) {

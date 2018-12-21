@@ -1,12 +1,12 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
 
 describe("Model.saveAsync()", function () {
-    var db = null;
-    var Person = null;
+    let db = null;
+    const Person = null;
 
-    var setup = function (nameDefinition, opts) {
+    const setup = function (nameDefinition, opts) {
         opts = opts || {};
 
         return function (done) {
@@ -41,7 +41,7 @@ describe("Model.saveAsync()", function () {
         before(setup({type: "text", defaultValue: "John"}));
 
         it("should use it if not defined", function () {
-            var John = new Person();
+            const John = new Person();
 
             return John.saveAsync()
                 .then(function () {
@@ -54,7 +54,7 @@ describe("Model.saveAsync()", function () {
         before(setup());
 
         it("should save item and return id", function () {
-            var John = new Person({
+            const John = new Person({
                 name: "John"
             });
 
@@ -74,7 +74,7 @@ describe("Model.saveAsync()", function () {
         before(setup());
 
         it("should still save item and return id", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "John"
             });
             John.saveAsync();
@@ -97,7 +97,7 @@ describe("Model.saveAsync()", function () {
         before(setup());
 
         it("should update properties, save item and return id", function () {
-            var John = new Person({
+            const John = new Person({
                 name: "Jane"
             });
             return John.saveAsync({name: "John"})
@@ -118,7 +118,7 @@ describe("Model.saveAsync()", function () {
         before(setup());
 
         it("should should throw", function () {
-            var John = new Person({
+            const John = new Person({
                 name: "Jane"
             });
             return John.saveAsync("will-fail")
@@ -132,10 +132,10 @@ describe("Model.saveAsync()", function () {
         before(setup());
 
         it("should save association first and then save item and return id", function () {
-            var Jane = new Person({
+            const Jane = new Person({
                 name: "Jane"
             });
-            var John = new Person({
+            const John = new Person({
                 name: "John",
                 parent: Jane
             });
@@ -155,7 +155,7 @@ describe("Model.saveAsync()", function () {
         before(setup());
 
         it("should save association first and then save item and return id", function () {
-            var John = new Person({
+            const John = new Person({
                 name: "John",
                 parent: {
                     name: "Jane"
@@ -178,7 +178,7 @@ describe("Model.saveAsync()", function () {
         before(setup(null, {autoSave: true}));
 
         it("should save the instance as soon as a property is changed", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "Jhon"
             });
 
@@ -194,7 +194,7 @@ describe("Model.saveAsync()", function () {
     });
 
     describe("with saveAssociations", function () {
-        var afterSaveCalled = false;
+        let afterSaveCalled = false;
 
         if (common.protocol() === 'mongodb') return;
 
@@ -204,7 +204,7 @@ describe("Model.saveAsync()", function () {
                     afterSaveCalled = true;
                 }
 
-                var hooks = {afterSave: afterSave};
+                const hooks = {afterSave: afterSave};
 
                 setup(null, {hooks: hooks, cache: false, hasOneOpts: {autoFetch: true}})(function (err) {
                     should.not.exist(err);
@@ -308,7 +308,7 @@ describe("Model.saveAsync()", function () {
                     afterSaveCalled = true;
                 }
 
-                var hooks = {afterSave: afterSave};
+                const hooks = {afterSave: afterSave};
 
                 setup(null, {
                     hooks: hooks, cache: false, hasOneOpts: {autoFetch: true},
@@ -403,7 +403,7 @@ describe("Model.saveAsync()", function () {
         });
 
         it("should save the instance as a geospatial point", function () {
-            var John = new Person({
+            const John = new Person({
                 name: {x: 51.5177, y: -0.0968}
             });
             return John.saveAsync()

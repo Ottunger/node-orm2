@@ -1,7 +1,7 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
-var ORM = require('../../');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
+const ORM = require('../../');
 
 if (common.protocol() === "mongodb") return;
 if (common.protocol() === "sqlite" && !common.getConfig().pathname) {
@@ -12,10 +12,10 @@ if (common.protocol() === "sqlite" && !common.getConfig().pathname) {
 }
 
 describe("Timezones", function () {
-    var db = null;
-    var Event = null;
+    const db = null;
+    const Event = null;
 
-    var setup = function (opts) {
+    const setup = function (opts) {
         return function (done) {
             helper.connect({query: opts.query}, function (connection) {
                 db = connection;
@@ -36,7 +36,8 @@ describe("Timezones", function () {
     };
 
     describe("specified", function () {
-        var a, zones = ['local', '-0734'/*, '+11:22'*/];
+        let a;
+        const zones = ['local', '-0734'/*, '+11:22'*/];
 
         for (a = 0; a < zones.length; a++) {
             describe(zones[a], function () {
@@ -47,7 +48,7 @@ describe("Timezones", function () {
                 });
 
                 it("should get back the same date that was stored", function (done) {
-                    var when = new Date(2013, 12, 5, 5, 34, 27);
+                    const when = new Date(2013, 12, 5, 5, 34, 27);
 
                     Event.create({name: "raid fridge", when: when}, function (err) {
                         should.not.exist(err);
@@ -76,7 +77,7 @@ describe("Timezones", function () {
 
         // This isn't consistent accross drivers. Needs more thinking and investigation.
         it("should get back a correctly offset time", function (done) {
-            var when = new Date(2013, 12, 5, 5, 34, 27);
+            const when = new Date(2013, 12, 5, 5, 34, 27);
 
             Event.create({name: "raid fridge", when: when}, function (err, new_event) {
                 should.not.exist(err);
@@ -92,7 +93,7 @@ describe("Timezones", function () {
                             query: {timezone: '+0400'}
                         })(function () {
                             Event.one({name: "raid fridge"}, function (err, item) {
-                                var expected = new Date(2013, 12, 5, 3, 34, 27);
+                                const expected = new Date(2013, 12, 5, 3, 34, 27);
 
                                 should.not.exist(err);
                                 item.when.should.eql(expected);

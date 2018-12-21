@@ -1,11 +1,11 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
+const should = require('should');
+const helper = require('../support/spec_helper');
 
 describe("Model.pkMapTo.find()", function () {
-    var db = null;
-    var Person = null;
+    let db = null;
+    const Person = null;
 
-    var setup = function () {
+    const setup = function () {
         return function (done) {
 
             // The fact that we've applied mapsTo to the key

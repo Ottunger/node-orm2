@@ -1,12 +1,12 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
-var protocol = common.protocol();
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
+const protocol = common.protocol();
 
 describe("hasMany", function () {
-    var db = null;
-    var Person = null;
-    var Pet = null;
+    let db = null;
+    const Person = null;
+    const Pet = null;
 
     before(function (done) {
         helper.connect(function (connection) {
@@ -17,7 +17,7 @@ describe("hasMany", function () {
 
     describe("normal", function () {
 
-        var setup = function (opts) {
+        const setup = function (opts) {
             opts = opts || {};
 
             return function (done) {
@@ -171,7 +171,7 @@ describe("hasMany", function () {
                 Person.find({name: "John"}, function (err, people) {
                     should.equal(err, null);
 
-                    var chain = people[0].getPets({name: "Mutt"});
+                    const chain = people[0].getPets({name: "Mutt"});
 
                     chain.should.be.a.Object();
                     chain.find.should.be.a.Function();
@@ -441,7 +441,7 @@ describe("hasMany", function () {
                         Jane.getPets(function (err, janesPets) {
                             should.not.exist(err);
 
-                            var petsAtStart = janesPets.length;
+                            const petsAtStart = janesPets.length;
 
                             Jane.addPets(Deco, function (err) {
                                 should.equal(err, null);
@@ -491,7 +491,7 @@ describe("hasMany", function () {
                         Justin.getPets(function (err, justinsPets) {
                             should.equal(err, null);
 
-                            var petCount = justinsPets.length;
+                            const petCount = justinsPets.length;
 
                             Justin.addPets(pets, function (err) {
                                 should.equal(err, null);
@@ -593,7 +593,7 @@ describe("hasMany", function () {
 
             it("clears current associations", function (done) {
                 Pet.find({name: "Deco"}, function (err, pets) {
-                    var Deco = pets[0];
+                    const Deco = pets[0];
 
                     Person.find({name: "Jane"}).first(function (err, Jane) {
                         should.equal(err, null);
@@ -726,8 +726,8 @@ describe("hasMany", function () {
     if (protocol === "mongodb") return;
 
     describe("with non-standard keys", function () {
-        var Email;
-        var Account;
+        let Email;
+        let Account;
 
         setup = function (opts, done) {
             Email = db.define('email', {
@@ -781,7 +781,7 @@ describe("hasMany", function () {
             setup({}, function (err) {
                 should.not.exist(err);
 
-                var sql;
+                let sql;
 
                 if (protocol === 'sqlite') {
                     sql = "PRAGMA table_info(?)";
@@ -817,7 +817,7 @@ describe("hasMany", function () {
         it("should add a composite key to the join table if requested", function (done) {
             setup({key: true}, function (err) {
                 should.not.exist(err);
-                var sql;
+                let sql;
 
                 if (protocol === 'postgres' || protocol === 'redshift') {
                     sql = "" +

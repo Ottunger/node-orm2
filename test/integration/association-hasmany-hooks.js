@@ -1,12 +1,12 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
+const should = require('should');
+const helper = require('../support/spec_helper');
 
 describe("hasMany hooks", function () {
-    var db = null;
-    var Person = null;
-    var Pet = null;
+    let db = null;
+    const Person = null;
+    const Pet = null;
 
-    var setup = function (props, opts) {
+    const setup = function (props, opts) {
         return function (done) {
             db.settings.set('instance.identityCache', false);
 
@@ -30,7 +30,7 @@ describe("hasMany hooks", function () {
     });
 
     describe("beforeSave", function () {
-        var had_extra = false;
+        let had_extra = false;
 
         before(setup({
             born: Date
@@ -119,7 +119,7 @@ describe("hasMany hooks", function () {
     });
 
     describe("beforeSaveAsync", function () {
-        var had_extra = false;
+        let had_extra = false;
 
         before(setup({
             born: Date

@@ -1,12 +1,12 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
+const should = require('should');
+const helper = require('../support/spec_helper');
 
 describe("hasOne promise-based methods", function () {
-    var db = null;
-    var Person = null;
-    var Pet = null;
+    let db = null;
+    const Person = null;
+    const Pet = null;
 
-    var setup = function (autoFetch) {
+    const setup = function (autoFetch) {
         return function (done) {
             db.settings.set('instance.identityCache', false);
             db.settings.set('instance.returnAllErrors', true);
@@ -79,7 +79,7 @@ describe("hasOne promise-based methods", function () {
             return Pet
                 .findAsync({petName: "Snagglepuss"})
                 .then(function (pets) {
-                    var pet = pets[0];
+                    const pet = pets[0];
                     pet.petName.should.equal("Snagglepuss");
                     pet.should.have.property("id");
                     pet.id.should.equal(11);

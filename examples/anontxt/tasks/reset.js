@@ -1,4 +1,4 @@
-var models = require('../app/models/');
+const models = require('../app/models/');
 
 models(function (err, db) {
     if (err) throw err;

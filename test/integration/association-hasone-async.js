@@ -1,19 +1,19 @@
-var helper = require('../support/spec_helper');
-var should = require('should');
-var common = require('../common');
-var protocol = common.protocol();
+const helper = require('../support/spec_helper');
+const should = require('should');
+const common = require('../common');
+const protocol = common.protocol();
 
 describe("hasOne", function () {
-    var db = null;
-    var Tree = null;
-    var Stalk = null;
-    var Leaf = null;
-    var leafId = null;
-    var treeId = null;
-    var stalkId = null;
-    var holeId = null;
+    let db = null;
+    const Tree = null;
+    const Stalk = null;
+    const Leaf = null;
+    const leafId = null;
+    const treeId = null;
+    const stalkId = null;
+    const holeId = null;
 
-    var setup = function (opts) {
+    const setup = function (opts) {
         opts = opts || {};
         return function (done) {
             db.settings.set('instance.identityCache', false);
@@ -158,7 +158,7 @@ describe("hasOne", function () {
     if (protocol !== "mongodb") {
         describe("mapsTo Async", function () {
             describe("with `mapsTo` get via `getOneAsync`", function () {
-                var leaf = null;
+                let leaf = null;
 
                 before(setup());
 
@@ -184,7 +184,7 @@ describe("hasOne", function () {
             });
 
             describe("with `mapsTo` set via property definition", function () {
-                var leaf = null;
+                let leaf = null;
 
                 before(setup());
 

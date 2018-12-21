@@ -1,12 +1,12 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
+const should = require('should');
+const helper = require('../support/spec_helper');
 
 describe("Model.createAsync()", function () {
-    var db = null;
-    var Pet = null;
-    var Person = null;
+    let db = null;
+    const Pet = null;
+    const Person = null;
 
-    var setup = function () {
+    const setup = function () {
         return function (done) {
             Person = db.define("person", {
                 name: String

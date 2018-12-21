@@ -1,9 +1,9 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var ORM = require('../../');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const ORM = require('../../');
 
 describe("Model keys option", function () {
-    var db = null;
+    let db = null;
 
     before(function (done) {
         helper.connect(function (connection) {
@@ -18,7 +18,7 @@ describe("Model keys option", function () {
     });
 
     describe("if model id is a property", function () {
-        var Person = null;
+        let Person = null;
 
         before(function (done) {
             Person = db.define("person", {
@@ -49,7 +49,7 @@ describe("Model keys option", function () {
     });
 
     describe("if model defines several keys", function () {
-        var DoorAccessHistory = null;
+        let DoorAccessHistory = null;
 
         before(function (done) {
             DoorAccessHistory = db.define("door_access_history", {

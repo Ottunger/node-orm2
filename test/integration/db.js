@@ -1,16 +1,16 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var sinon = require('sinon');
-var common = require('../common');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const sinon = require('sinon');
+const common = require('../common');
 
 describe("db.driver", function () {
-    var db = null;
+    let db = null;
 
     before(function (done) {
         helper.connect(function (connection) {
             db = connection;
 
-            var Log = db.define('log', {
+            const Log = db.define('log', {
                 what: {type: 'text'},
                 when: {type: 'date', time: true},
                 who: {type: 'text'}
@@ -52,8 +52,8 @@ describe("db.driver", function () {
             });
 
             it("should escape sql queries", function () {
-                var query = "SELECT log.?? FROM log WHERE log.?? LIKE ? AND log.?? > ?";
-                var args = ['what', 'who', 'jane', 'when', new Date('2013/04/07 12:40:00')];
+                const query = "SELECT log.?? FROM log WHERE log.?? LIKE ? AND log.?? > ?";
+                const args = ['what', 'who', 'jane', 'when', new Date('2013/04/07 12:40:00')];
                 return db.driver.execQueryAsync(query, args)
                     .then(function (data) {
                         should(JSON.stringify(data) === JSON.stringify([{"what": "user login"}]));
@@ -63,7 +63,7 @@ describe("db.driver", function () {
 
         describe('#eagerQuery', function () {
             if (common.protocol() === "redshift") return;
-            var fixture = {
+            const fixture = {
                 association: {
                     model: {
                         table: 'dog'
@@ -104,7 +104,7 @@ describe("db.driver", function () {
 
             describe('cb', function () {
                 it('should build correct query', function (done) {
-                    var execSimpleQueryStub = sinon.stub(db.driver, 'execSimpleQuery')
+                    const execSimpleQueryStub = sinon.stub(db.driver, 'execSimpleQuery')
                         .callsFake(function (q, cb) {
                             cb();
                         });
@@ -124,7 +124,7 @@ describe("db.driver", function () {
 
             describe('async', function () {
                 it('should build correct query', function () {
-                    var execSimpleQueryStub = sinon.stub(db.driver, 'execSimpleQuery')
+                    const execSimpleQueryStub = sinon.stub(db.driver, 'execSimpleQuery')
                         .callsFake(function (q, cb) {
                             cb();
                         });
@@ -152,8 +152,8 @@ describe("db.driver", function () {
             });
 
             it("should escape sql queries", function (done) {
-                var query = "SELECT log.?? FROM log WHERE log.?? LIKE ? AND log.?? > ?";
-                var args = ['what', 'who', 'jane', 'when', new Date('2013/04/07 12:40:00')];
+                const query = "SELECT log.?? FROM log WHERE log.?? LIKE ? AND log.?? > ?";
+                const args = ['what', 'who', 'jane', 'when', new Date('2013/04/07 12:40:00')];
                 db.driver.execQuery(query, args, function (err, data) {
                     should.not.exist(err);
 
@@ -165,7 +165,7 @@ describe("db.driver", function () {
     });
 
     describe('DB', function () {
-        var db = null;
+        let db = null;
         beforeEach(function (done) {
             helper.connect(function (connection) {
                 db = connection;
@@ -186,10 +186,10 @@ describe("db.driver", function () {
                 db.define("my_model2", {
                     property: String
                 });
-                var syncStub = sinon.stub(db.models['my_model'], 'sync').callsFake(function (cb) {
+                const syncStub = sinon.stub(db.models['my_model'], 'sync').callsFake(function (cb) {
                     cb(null, {})
                 });
-                var syncStub2 = sinon.stub(db.models['my_model2'], 'sync').callsFake(function (cb) {
+                const syncStub2 = sinon.stub(db.models['my_model2'], 'sync').callsFake(function (cb) {
                     cb(null, {})
                 });
                 return db.syncPromise()
@@ -210,10 +210,10 @@ describe("db.driver", function () {
                     property: String
                 });
 
-                var dropStub = sinon.stub(db.models['my_model'], 'drop').callsFake(function (cb) {
+                const dropStub = sinon.stub(db.models['my_model'], 'drop').callsFake(function (cb) {
                     cb(null, {})
                 });
-                var dropStub2 = sinon.stub(db.models['my_model2'], 'drop').callsFake(function (cb) {
+                const dropStub2 = sinon.stub(db.models['my_model2'], 'drop').callsFake(function (cb) {
                     cb(null, {})
                 });
 
@@ -227,8 +227,8 @@ describe("db.driver", function () {
 
         describe("db.use()", function () {
             it("should be able to register a plugin", function (done) {
-                var MyPlugin = require("../support/my_plugin");
-                var opts = {
+                const MyPlugin = require("../support/my_plugin");
+                const opts = {
                     option: true,
                     calledDefine: false
                 };
@@ -245,8 +245,8 @@ describe("db.driver", function () {
             });
 
             it("a plugin should be able to catch models before defining them", function (done) {
-                var MyPlugin = require("../support/my_plugin");
-                var opts = {
+                const MyPlugin = require("../support/my_plugin");
+                const opts = {
                     option: true,
                     calledDefine: false,
                     beforeDefine: function (name, props, opts) {
@@ -256,7 +256,7 @@ describe("db.driver", function () {
 
                 db.use(MyPlugin, opts);
 
-                var MyModel = db.define("my_model", { // db.define should call plugin.define method
+                const MyModel = db.define("my_model", { // db.define should call plugin.define method
                     property: String
                 });
 
@@ -267,7 +267,7 @@ describe("db.driver", function () {
             });
 
             it("should be able to register a plugin as string", function (done) {
-                var opts = {
+                const opts = {
                     option: true,
                     calledDefine: false
                 };
@@ -288,7 +288,7 @@ describe("db.driver", function () {
             it("should use setting model.namePrefix as table prefix if defined", function (done) {
                 db.settings.set("model.namePrefix", "orm_");
 
-                var Person = db.define("person", {
+                const Person = db.define("person", {
                     name: String
                 });
 
@@ -301,7 +301,7 @@ describe("db.driver", function () {
 
     describe("db.loadAsync()", function () {
         it("should require a file if array", function () {
-            var filePath = "../support/spec_load";
+            const filePath = "../support/spec_load";
             return db.loadAsync([filePath])
                 .then(function () {
                     db.models.should.have.property("person");
@@ -310,7 +310,7 @@ describe("db.driver", function () {
         });
 
         it("should require a file if single file path string", function () {
-            var filePath = "../support/spec_load";
+            const filePath = "../support/spec_load";
             return db.loadAsync(filePath)
                 .then(function () {
                     db.models.should.have.property("person");
@@ -319,7 +319,7 @@ describe("db.driver", function () {
         });
 
         it("should be able to load more than one file", function () {
-            var filePaths = ["../support/spec_load_second", "../support/spec_load_third"];
+            const filePaths = ["../support/spec_load_second", "../support/spec_load_third"];
 
             return db.loadAsync(filePaths)
                 .then(function () {
@@ -394,7 +394,7 @@ describe("db.driver", function () {
 
     describe("db.serial()", function () {
         it("should be able to execute chains in serial", function (done) {
-            var Person = db.define("person", {
+            const Person = db.define("person", {
                 name: String,
                 surname: String
             });

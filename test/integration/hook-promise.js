@@ -1,17 +1,17 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
+const should = require('should');
+const helper = require('../support/spec_helper');
 
 describe("HookPromise", function () {
-    var db = null;
-    var Person = null;
-    var triggeredHooks = {};
-    var getTimestamp; // Calling it 'getTime' causes strangeness.
+    let db = null;
+    const Person = null;
+    const triggeredHooks = {};
+    let getTimestamp; // Calling it 'getTime' causes strangeness.
 
     getTimestamp = function () {
         return Date.now();
     };
 
-    var checkHook = function (hook) {
+    const checkHook = function (hook) {
         triggeredHooks[hook] = false;
 
         return function () {
@@ -19,7 +19,7 @@ describe("HookPromise", function () {
         };
     };
 
-    var setup = function (hooks) {
+    const setup = function (hooks) {
         if (typeof hooks === "undefined") {
             hooks = {
                 afterCreate: checkHook("afterCreate"),
@@ -61,7 +61,7 @@ describe("HookPromise", function () {
         beforeEach(setup());
         it("should allow modification of instance", function () {
             Person.beforeCreate(function () {
-                var self = this;
+                const self = this;
                 return new Promise(function (resolve) {
                     setTimeout(function () {
                         self.name = "Hook Worked";
@@ -136,7 +136,7 @@ describe("HookPromise", function () {
 
         it("should trigger and wait", function () {
             Person.beforeSave(function () {
-                var self = this;
+                const self = this;
                 return new Promise(function (resolve) {
                     setTimeout(function () {
                         self.name = 'John Doe';
@@ -159,7 +159,7 @@ describe("HookPromise", function () {
         beforeEach(setup());
         it("should trigger and wait", function () {
             Person.beforeValidation(function () {
-                var self = this;
+                const self = this;
                 return new Promise(function (resolve) {
                     setTimeout(function () {
                         self.name = "John Snow";
@@ -176,7 +176,7 @@ describe("HookPromise", function () {
 
         it("should throw error", function () {
             Person.beforeValidation(function () {
-                var self = this;
+                const self = this;
                 return new Promise(function (_, reject) {
                     setTimeout(function () {
                         self.name = "John Snow";
@@ -195,7 +195,7 @@ describe("HookPromise", function () {
     describe("afterLoad", function () {
         beforeEach(setup());
         it("should trigger and wait", function () {
-            var afterLoad = false;
+            let afterLoad = false;
             Person.afterLoad(function () {
                 return new Promise(function (resolve) {
                     setTimeout(function () {
@@ -212,7 +212,7 @@ describe("HookPromise", function () {
         });
 
         it("should throw error", function () {
-            var afterLoad = false;
+            let afterLoad = false;
             Person.afterLoad(function () {
                 return new Promise(function (_, reject) {
                     setTimeout(function () {
@@ -233,7 +233,7 @@ describe("HookPromise", function () {
     describe("afterAutoFetch", function () {
         beforeEach(setup());
         it("should trigger and wait", function () {
-            var afterAutoFetch = false;
+            let afterAutoFetch = false;
             Person.afterAutoFetch(function () {
                 return new Promise(function (resolve) {
                     setTimeout(function () {
@@ -250,7 +250,7 @@ describe("HookPromise", function () {
         });
 
         it("should throw error", function () {
-            var afterAutoFetch = false;
+            let afterAutoFetch = false;
             Person.afterAutoFetch(function () {
                 return new Promise(function (_, reject) {
                     setTimeout(function () {
@@ -271,7 +271,7 @@ describe("HookPromise", function () {
         before(setup());
 
         it("should trigger and wait", function () {
-            var beforeRemove = false;
+            let beforeRemove = false;
             Person.beforeRemove(function () {
                 return new Promise(function (resolve) {
                     beforeRemove = true;
@@ -310,7 +310,7 @@ describe("HookPromise", function () {
     describe("instance modifications", function () {
         before(setup({
             beforeValidation: function () {
-                var self = this;
+                const self = this;
                 return new Promise(function (resolve) {
                     setTimeout(function () {
                         should.equal(self.name, "John Doe");
@@ -320,7 +320,7 @@ describe("HookPromise", function () {
                 });
             },
             beforeCreate: function () {
-                var self = this;
+                const self = this;
                 return new Promise(function (resolve) {
                     setTimeout(function () {
                         should.equal(self.name, "beforeValidation");
@@ -330,7 +330,7 @@ describe("HookPromise", function () {
                 });
             },
             beforeSave: function () {
-                var self = this;
+                const self = this;
                 return new Promise(function (resolve) {
                     setTimeout(function () {
                         should.equal(self.name, "beforeCreate");

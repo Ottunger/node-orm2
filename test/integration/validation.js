@@ -1,17 +1,17 @@
-var _ = require('lodash');
-var should = require('should');
-var helper = require('../support/spec_helper');
-var async = require('async');
-var common = require('../common');
-var protocol = common.protocol().toLowerCase();
-var ORM = require('../../');
+const _ = require('lodash');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const async = require('async');
+const common = require('../common');
+const protocol = common.protocol().toLowerCase();
+const ORM = require('../../');
 
 describe("Validations", function () {
-    var db = null;
-    var Person = null;
-    var Person2 = null;
+    let db = null;
+    const Person = null;
+    const Person2 = null;
 
-    var setup = function (returnAll, required) {
+    const setup = function (returnAll, required) {
         return function (done) {
             db.settings.set('properties.required', required);
             db.settings.set('instance.returnAllErrors', returnAll);
@@ -36,7 +36,7 @@ describe("Validations", function () {
         }
         return next();
     };
-    var setupAlwaysValidate = function () {
+    const setupAlwaysValidate = function () {
         return function (done) {
             Person2 = db.define("person2", {
                 name: {type: 'text'},
@@ -69,7 +69,7 @@ describe("Validations", function () {
         before(setupAlwaysValidate());
 
         it("I want to see it fail first (the absence of evidence)", function (done) {
-            var rachel = new Person2({name: 'rachel', canbenull: null, mustbenull: null});
+            const rachel = new Person2({name: 'rachel', canbenull: null, mustbenull: null});
             rachel.save(function (err) {
                 should.not.exist(err);
                 return done();
@@ -77,7 +77,7 @@ describe("Validations", function () {
         });
 
         it("then it should work", function (done) {
-            var tom = new Person2({name: 'tom', canbenull: null, mustbenull: 'notnull'});
+            const tom = new Person2({name: 'tom', canbenull: null, mustbenull: 'notnull'});
             tom.save(function (err) {
                 should.exist(err);
                 should.equal(typeof err, "object");
@@ -94,7 +94,7 @@ describe("Validations", function () {
         before(setup(false, false));
 
         it("should work", function (done) {
-            var john = new Person({name: 'fdhdjendfjkdfhshdfhakdfjajhfdjhbfgk'});
+            const john = new Person({name: 'fdhdjendfjkdfhshdfhakdfjajhfdjhbfgk'});
 
             john.save(function (err) {
                 should.equal(typeof err, "object");
@@ -111,9 +111,9 @@ describe("Validations", function () {
         describe("unique", function () {
             if (protocol === "mongodb") return;
 
-            var Product = null, Supplier = null;
+            const Product = null, Supplier = null;
 
-            var setupUnique = function (ignoreCase, scope, msg) {
+            const setupUnique = function (ignoreCase, scope, msg) {
                 return function (done) {
                     Supplier = db.define("supplier", {
                         name: String
@@ -352,7 +352,7 @@ describe("Validations", function () {
             before(setup(false, false));
 
             it("should save when properties are null", function (done) {
-                var john = new Person();
+                const john = new Person();
 
                 john.save(function (err) {
                     should.equal(err, null);
@@ -363,7 +363,7 @@ describe("Validations", function () {
             });
 
             it("shouldn't save when a property is invalid", function (done) {
-                var john = new Person({height: 4});
+                const john = new Person({height: 4});
 
                 john.save(function (err) {
                     should.notEqual(err, null);
@@ -382,7 +382,7 @@ describe("Validations", function () {
             before(setup(false, true));
 
             it("should not save when properties are null", function (done) {
-                var john = new Person();
+                const john = new Person();
 
                 john.save(function (err) {
                     should.notEqual(err, null);
@@ -393,7 +393,7 @@ describe("Validations", function () {
             });
 
             it("should return a required error when the first property is blank", function (done) {
-                var john = new Person({height: 4});
+                const john = new Person({height: 4});
 
                 john.save(function (err) {
                     should.notEqual(err, null);
@@ -414,7 +414,7 @@ describe("Validations", function () {
             before(setup(true, false));
 
             it("should return all errors when a property is invalid", function (done) {
-                var john = new Person({name: 'n', height: 4});
+                const john = new Person({name: 'n', height: 4});
 
                 john.save(function (err) {
                     should.notEqual(err, null);
@@ -440,7 +440,7 @@ describe("Validations", function () {
             before(setup(true, true));
 
             it("should return required and user specified validation errors", function (done) {
-                var john = new Person({height: 4});
+                const john = new Person({height: 4});
 
                 john.save(function (err) {
                     should.notEqual(err, null);
@@ -471,10 +471,10 @@ describe("Validations", function () {
         before(setup());
 
         it("validate should be writable", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "John"
             });
-            var validateCalled = false;
+            let validateCalled = false;
             John.validate = function (cb) {
                 validateCalled = true;
                 cb(null);

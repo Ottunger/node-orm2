@@ -1,14 +1,14 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var ORM = require('../../');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const ORM = require('../../');
 
 describe("LazyLoad properties", function () {
-    var db = null;
-    var Person = null;
-    var PersonPhoto = new Buffer(1024); // fake photo
-    var OtherPersonPhoto = new Buffer(1024); // other fake photo
+    let db = null;
+    const Person = null;
+    const PersonPhoto = new Buffer(1024); // fake photo
+    const OtherPersonPhoto = new Buffer(1024); // other fake photo
 
-    var setup = function () {
+    const setup = function () {
         return function (done) {
             Person = db.define("person", {
                 name: String,

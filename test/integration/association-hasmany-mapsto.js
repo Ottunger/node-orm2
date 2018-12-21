@@ -1,13 +1,13 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
 
 if (common.protocol() === "mongodb") return;   // Can't do mapsTo testing on mongoDB ()
 
 describe("hasMany with mapsTo", function () {
-    var db = null;
-    var Person = null;
-    var Pet = null;
+    let db = null;
+    const Person = null;
+    const Pet = null;
 
     before(function (done) {
         helper.connect(function (connection) {
@@ -18,7 +18,7 @@ describe("hasMany with mapsTo", function () {
 
     describe("normal", function () {
 
-        var setup = function (opts) {
+        const setup = function (opts) {
             opts = opts || {};
 
             return function (done) {
@@ -173,7 +173,7 @@ describe("hasMany with mapsTo", function () {
                 Person.find({firstName: "John"}, function (err, people) {
                     should.equal(err, null);
 
-                    var chain = people[0].getPets({firstName: "Mutt"});
+                    const chain = people[0].getPets({firstName: "Mutt"});
 
                     chain.should.be.a.Object();
                     chain.find.should.be.a.Function();
@@ -383,7 +383,7 @@ describe("hasMany with mapsTo", function () {
                         Jane.getPets(function (err, janesPets) {
                             should.not.exist(err);
 
-                            var petsAtStart = janesPets.length;
+                            const petsAtStart = janesPets.length;
 
                             Jane.addPets(Deco, function (err) {
                                 should.equal(err, null);
@@ -433,7 +433,7 @@ describe("hasMany with mapsTo", function () {
                         Justin.getPets(function (err, justinsPets) {
                             should.equal(err, null);
 
-                            var petCount = justinsPets.length;
+                            const petCount = justinsPets.length;
 
                             Justin.addPets(pets, function (err) {
                                 should.equal(err, null);
@@ -535,7 +535,7 @@ describe("hasMany with mapsTo", function () {
 
             it("clears current associations", function (done) {
                 Pet.find({petName: "Deco"}, function (err, pets) {
-                    var Deco = pets[0];
+                    const Deco = pets[0];
 
                     Person.find({firstName: "Jane"}).first(function (err, Jane) {
                         should.equal(err, null);

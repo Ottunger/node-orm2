@@ -1,11 +1,11 @@
-var helper = require('../support/spec_helper');
-var should = require('should');
+const helper = require('../support/spec_helper');
+const should = require('should');
 
 describe("hasOne Async", function () {
-    var db = null;
-    var Person = null;
+    let db = null;
+    const Person = null;
 
-    var setup = function (required) {
+    const setup = function (required) {
         return function (done) {
             db.settings.set('instance.identityCache', false);
             db.settings.set('instance.returnAllErrors', true);
@@ -33,7 +33,7 @@ describe("hasOne Async", function () {
         before(setup(true));
 
         it("should not accept empty association", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "John",
                 parentId: null
             });
@@ -49,7 +49,7 @@ describe("hasOne Async", function () {
         });
 
         it("should accept association", function () {
-            var John = new Person({
+            const John = new Person({
                 name: "John",
                 parentId: 1
             });
@@ -61,14 +61,14 @@ describe("hasOne Async", function () {
         before(setup(false));
 
         it("should accept empty association", function () {
-            var John = new Person({
+            const John = new Person({
                 name: "John"
             });
             return John.saveAsync();
         });
 
         it("should accept null association", function () {
-            var John = new Person({
+            const John = new Person({
                 name: "John",
                 parent_id: null
             });

@@ -1,14 +1,14 @@
-var helper = require('../support/spec_helper');
-var should = require('should');
-var async = require('async');
-var common = require('../common');
+const helper = require('../support/spec_helper');
+const should = require('should');
+const async = require('async');
+const common = require('../common');
 
 describe("hasOne Async", function () {
-    var db = null;
-    var Person = null;
-    var Pet = null;
+    let db = null;
+    const Person = null;
+    const Pet = null;
 
-    var setup = function () {
+    const setup = function () {
         return function (done) {
             Person = db.define('person', {
                 name: String
@@ -52,8 +52,8 @@ describe("hasOne Async", function () {
         }));
 
         it("should create methods in both models", function (done) {
-            var person = Person(1);
-            var pet = Pet(1);
+            const person = Person(1);
+            const pet = Pet(1);
 
             person.getPet.should.be.a.Function();
             person.setPet.should.be.a.Function();
@@ -122,7 +122,7 @@ describe("hasOne Async", function () {
                     should(Array.isArray(owners));
                     owners.length.should.equal(2);
                     // Don't know which order they'll be in.
-                    var idProp = common.protocol() === 'mongodb' ? '_id' : 'id';
+                    const idProp = common.protocol() === 'mongodb' ? '_id' : 'id';
 
                     if (owners[0][idProp] === ownersCopy[0][idProp]) {
                         owners[0].should.eql(ownersCopy[0]);
@@ -141,7 +141,7 @@ describe("hasOne Async", function () {
             return Person
                 .findAsync({name: "John Doe"})
                 .then(function (persons) {
-                    var John = persons[0];
+                    const John = persons[0];
                     should.exist(John);
                     return [John, Pet.findAsync({name: "Deco"})];
                 })

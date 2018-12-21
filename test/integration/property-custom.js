@@ -1,12 +1,12 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
-var ORM = require('../../');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
+const ORM = require('../../');
 
 describe("custom types", function () {
     if (common.protocol() === 'mongodb') return;
 
-    var db = null;
+    let db = null;
 
     before(function (done) {
         helper.connect(function (connection) {
@@ -21,7 +21,7 @@ describe("custom types", function () {
     });
 
     describe("simple", function () {
-        var LottoTicket = null;
+        let LottoTicket = null;
 
         before(function (done) {
             db.defineType('numberArray', {
@@ -54,7 +54,7 @@ describe("custom types", function () {
         });
 
         it("should store data in the table", function (done) {
-            var ticket = new LottoTicket({numbers: [4, 23, 6, 45, 9, 12, 3, 29]});
+            const ticket = new LottoTicket({numbers: [4, 23, 6, 45, 9, 12, 3, 29]});
 
             ticket.save(function (err) {
                 should.not.exist(err);
@@ -78,12 +78,12 @@ describe("custom types", function () {
                         return 'TEXT';
                     }
                 });
-                var Person = db.define('person', {
+                const Person = db.define('person', {
                     name: String,
                     surname: String,
                     age: Number
                 });
-                var Pet = db.define('pet', {
+                const Pet = db.define('pet', {
                     name: String
                 });
                 Person.hasMany('pets', Pet, {date: {type: 'customDate'}}, {autoFetch: true});
@@ -119,7 +119,7 @@ describe("custom types", function () {
     });
 
     describe("complex", function () {
-        var WonkyTotal = null;
+        let WonkyTotal = null;
 
         before(function (done) {
             db.defineType('wonkyNumber', {
@@ -152,7 +152,7 @@ describe("custom types", function () {
         });
 
         it("should store wonky total in a differently named field", function (done) {
-            var item = new WonkyTotal();
+            const item = new WonkyTotal();
 
             item.name = "cabbages";
             item.total = 8;

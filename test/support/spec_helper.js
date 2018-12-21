@@ -1,9 +1,9 @@
-var common = require('../common');
-var async = require('async');
-var should = require('should');
+const common = require('../common');
+const async = require('async');
+const should = require('should');
 
 module.exports.connect = function (cb) {
-    var opts = {};
+    let opts = {};
 
     if (1 in arguments) {
         opts = arguments[0];

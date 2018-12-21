@@ -1,14 +1,14 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var ORM = require('../../');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const ORM = require('../../');
 
 describe("LazyLoad Async properties", function () {
-    var db = null;
-    var Person = null;
-    var PersonPhoto = new Buffer(1024); // fake photo
-    var OtherPersonPhoto = new Buffer(1024); // other fake photo
+    let db = null;
+    const Person = null;
+    const PersonPhoto = new Buffer(1024); // fake photo
+    const OtherPersonPhoto = new Buffer(1024); // other fake photo
 
-    var setup = function () {
+    const setup = function () {
         return function (done) {
             Person = db.define("person", {
                 name: String,
@@ -45,7 +45,7 @@ describe("LazyLoad Async properties", function () {
             return Person
                 .findAsync()
                 .then(function (John) {
-                    var john = John[0];
+                    const john = John[0];
 
                     should.equal(typeof john, 'object');
                     should.equal(Array.isArray(john), false);
@@ -58,7 +58,7 @@ describe("LazyLoad Async properties", function () {
             return Person
                 .findAsync()
                 .then(function (persons) {
-                    var John = persons[0];
+                    const John = persons[0];
                     should.equal(typeof John, 'object');
                     should.equal(Array.isArray(John), false);
 
@@ -72,7 +72,7 @@ describe("LazyLoad Async properties", function () {
             return Person
                 .findAsync()
                 .then(function (persons) {
-                    var John = persons[0];
+                    const John = persons[0];
 
                     should.equal(typeof John, 'object');
                     should.equal(Array.isArray(John), false);
@@ -87,7 +87,7 @@ describe("LazyLoad Async properties", function () {
             return Person
                 .findAsync()
                 .then(function (persons) {
-                    var John = persons[0];
+                    const John = persons[0];
                     should.equal(typeof John, 'object');
                     return John.setPhotoAsync(OtherPersonPhoto);
                 })
@@ -96,7 +96,7 @@ describe("LazyLoad Async properties", function () {
                     return Person.findAsync();
                 })
                 .then(function (persons) {
-                    var John = persons[0];
+                    const John = persons[0];
 
                     should.equal(typeof John, 'object');
                     should.equal(Array.isArray(John), false);
@@ -111,7 +111,7 @@ describe("LazyLoad Async properties", function () {
             return Person
                 .findAsync()
                 .then(function (persons) {
-                    var John = persons[0];
+                    const John = persons[0];
 
                     should.equal(typeof John, 'object');
                     should.equal(Array.isArray(John), false);

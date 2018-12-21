@@ -1,12 +1,12 @@
-var _ = require('lodash');
-var helpers = require('./_helpers');
+const _ = require('lodash');
+const helpers = require('./_helpers');
 
 module.exports = {
     list: function (req, res, next) {
         req.models.message.find().limit(4).order('-id').all(function (err, messages) {
             if (err) return next(err);
 
-            var items = messages.map(function (m) {
+            const items = messages.map(function (m) {
                 return m.serialize();
             });
 
@@ -14,7 +14,7 @@ module.exports = {
         });
     },
     create: function (req, res, next) {
-        var params = _.pick(req.body, 'title', 'body');
+        const params = _.pick(req.body, 'title', 'body');
 
         req.models.message.create(params, function (err, message) {
             if (err) {

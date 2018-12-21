@@ -1,9 +1,9 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var common = require('../common');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const common = require('../common');
 
 describe("Model.sync", function () {
-    var db = null;
+    let db = null;
 
     before(function (done) {
         helper.connect(function (connection) {
@@ -19,7 +19,7 @@ describe("Model.sync", function () {
     // SQLite scopes index names to a database and NOT a table, so
     // index name collisions were possible. This tests the workaround.
     it("should work with multiple same-named indexes", function (done) {
-        var A, B, C;
+        let A, B, C;
 
         A = db.define('a', {name: String});
         B = db.define('b', {name: String});

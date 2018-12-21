@@ -1,7 +1,7 @@
-var orm = require('../../../../');
-var settings = require('../../config/settings');
+const orm = require('../../../../');
+const settings = require('../../config/settings');
 
-var connection = null;
+let connection = null;
 
 function setup(db, cb) {
     require('./message')(orm, db);

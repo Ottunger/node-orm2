@@ -1,20 +1,20 @@
-var ORM = require('../../');
-var helper = require('../support/spec_helper');
-var should = require('should');
-var common = require('../common');
-var protocol = common.protocol();
+const ORM = require('../../');
+const helper = require('../support/spec_helper');
+const should = require('should');
+const common = require('../common');
+const protocol = common.protocol();
 
 describe("hasOne", function () {
-    var db = null;
-    var Tree = null;
-    var Stalk = null;
-    var Leaf = null;
-    var leafId = null;
-    var treeId = null;
-    var stalkId = null;
-    var holeId = null;
+    let db = null;
+    const Tree = null;
+    const Stalk = null;
+    const Leaf = null;
+    const leafId = null;
+    const treeId = null;
+    const stalkId = null;
+    const holeId = null;
 
-    var setup = function (opts) {
+    const setup = function (opts) {
         opts = opts || {};
         return function (done) {
             db.settings.set('instance.identityCache', false);
@@ -173,7 +173,7 @@ describe("hasOne", function () {
             });
 
             describe("associating by parent id", function () {
-                var tree = null;
+                let tree = null;
 
                 before(function (done) {
                     Tree.create({type: "cyprus"}, function (err, item) {
@@ -296,7 +296,7 @@ describe("hasOne", function () {
             db.settings.set('instance.identityCache', false);
             db.settings.set('instance.returnAllErrors', true);
 
-            var Person = db.define("person", {
+            const Person = db.define("person", {
                 name: String
             });
             Person.hasOne("parent", {
@@ -304,7 +304,7 @@ describe("hasOne", function () {
             });
 
             helper.dropSync(Person, function () {
-                var child = new Person({
+                const child = new Person({
                     name: "Child"
                 });
                 child.setParent(new Person({name: "Parent"}), function (err) {
@@ -321,7 +321,7 @@ describe("hasOne", function () {
             db.settings.set('instance.identityCache', false);
             db.settings.set('instance.returnAllErrors', true);
 
-            var Person = db.define("person", {
+            const Person = db.define("person", {
                 name: String
             });
             Person.hasOne("topParent", Person);
@@ -371,7 +371,7 @@ describe("hasOne", function () {
         });
 
         it("should return a ChainFind if no callback passed", function (done) {
-            var ChainFind = Leaf.findByTree({
+            const ChainFind = Leaf.findByTree({
                 type: "pine"
             });
             ChainFind.run.should.be.a.Function();
@@ -383,7 +383,7 @@ describe("hasOne", function () {
     if (protocol !== "mongodb") {
         describe("mapsTo", function () {
             describe("with `mapsTo` set via `hasOne`", function () {
-                var leaf = null;
+                let leaf = null;
 
                 before(setup());
 
@@ -396,7 +396,7 @@ describe("hasOne", function () {
                 });
 
                 it("should have correct fields in the DB", function (done) {
-                    var sql = db.driver.query.select()
+                    const sql = db.driver.query.select()
                         .from('leaf')
                         .select('size', 'stalk_id')
                         .where({size: 444})
@@ -425,7 +425,7 @@ describe("hasOne", function () {
             });
 
             describe("with `mapsTo` set via property definition", function () {
-                var leaf = null;
+                let leaf = null;
 
                 before(setup());
 
@@ -438,7 +438,7 @@ describe("hasOne", function () {
                 });
 
                 it("should have correct fields in the DB", function (done) {
-                    var sql = db.driver.query.select()
+                    const sql = db.driver.query.select()
                         .from('leaf')
                         .select('size', 'hole_id')
                         .where({size: 444})

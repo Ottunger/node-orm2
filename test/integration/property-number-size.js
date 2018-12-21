@@ -1,12 +1,12 @@
-var should = require('should');
-var common = require('../common');
-var helper = require('../support/spec_helper');
-var protocol = common.protocol().toLowerCase();
+const should = require('should');
+const common = require('../common');
+const helper = require('../support/spec_helper');
+const protocol = common.protocol().toLowerCase();
 
 // Round because different systems store floats in different
 // ways, thereby introducing small errors.
 function round(num, points) {
-    var m = Math.pow(10, points);
+    const m = Math.pow(10, points);
 
     return Math.round(num * m) / m;
 }
@@ -17,9 +17,9 @@ function fuzzyEql(num1, num2) {
 
 if (protocol !== "sqlite") {
     describe("Number Properties", function () {
-        var db = null;
-        var NumberSize = null;
-        var NumberData = {
+        let db = null;
+        const NumberSize = null;
+        const NumberData = {
             int2: 32700,
             int4: 2147483000,
             int8: 2251799813685248,
@@ -27,7 +27,7 @@ if (protocol !== "sqlite") {
             float8: 1 * Math.pow(10, 306)
         };
 
-        var setup = function () {
+        const setup = function () {
             return function (done) {
                 NumberSize = db.define("number_size", {
                     int2: {type: 'integer', size: 2},

@@ -1,12 +1,12 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var ORM = require('../../');
+const should = require('should');
+const helper = require('../support/spec_helper');
+const ORM = require('../../');
 
 describe("Model.remove()", function () {
-    var db = null;
-    var Person = null;
+    let db = null;
+    const Person = null;
 
-    var setup = function () {
+    const setup = function () {
         return function (done) {
             Person = db.define("person", {
                 name: String
@@ -43,10 +43,10 @@ describe("Model.remove()", function () {
         before(setup());
 
         it("remove should be writable", function (done) {
-            var John = new Person({
+            const John = new Person({
                 name: "John"
             });
-            var removeCalled = false;
+            let removeCalled = false;
             John.remove = function (cb) {
                 removeCalled = true;
                 cb(null);

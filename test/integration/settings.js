@@ -1,13 +1,13 @@
-var should = require('should');
-var helper = require('../support/spec_helper');
-var ORM = require('../../');
-var Settings = ORM.Settings;
+const should = require('should');
+const helper = require('../support/spec_helper');
+const ORM = require('../../');
+const Settings = ORM.Settings;
 
 describe("Settings", function () {
     describe("changed on connection instance", function () {
         it("should not change global defaults", function (done) {
-            var setting = 'instance.returnAllErrors';
-            var defaultValue = ORM.settings.get(setting);
+            const setting = 'instance.returnAllErrors';
+            const defaultValue = ORM.settings.get(setting);
 
             helper.connect(function (db) {
                 db.settings.set(setting, !defaultValue);
@@ -23,7 +23,7 @@ describe("Settings", function () {
     });
 
     describe("#get", function () {
-        var settings, returned;
+        let settings, returned;
 
         beforeEach(function () {
             settings = new Settings.Container({a: [1, 2]});
@@ -46,10 +46,10 @@ describe("Settings", function () {
     });
 
     describe("manipulating:", function () {
-        var testFunction = function testFunction() {
+        const testFunction = function testFunction() {
             return "test";
         };
-        var settings = new Settings.Container({});
+        const settings = new Settings.Container({});
 
         describe("some.sub.object = 123.45", function () {
             before(function (done) {
