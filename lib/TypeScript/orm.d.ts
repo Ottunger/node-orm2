@@ -101,13 +101,6 @@ declare module 'orm' {
             [property: string]: any;
         }
 
-        export interface Singleton {
-            clear(key?: string): Singleton;
-            get(key: string, opts: {saveCheck?: boolean, identityCache?: number},
-                createCb: (err: any, value: Instance) => void, returnCb: (err: any, value: Instance) => void);
-            clearType(type: string);
-        }
-
         export interface ModelOptions {
             id?: string[];
             autoFetch?: boolean;
@@ -253,10 +246,12 @@ declare module 'orm' {
         export class singleton {
             static clear(key?: string): singleton;
 
-            static get(key, opts: {
+            static get(key: string, opts: {
                 identityCache?: any;
                 saveCheck?: boolean;
-            }, createCb: Function, returnCb: Function);
+            }, createCb: (err: any, value: Instance) => void, returnCb: (err: any, value: Instance) => void);
+
+            static clearType(type: string);
         }
 
         export class Settings {
