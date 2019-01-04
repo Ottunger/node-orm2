@@ -1,7 +1,5 @@
 ﻿/// <reference path="sql-query.d.ts" />
 
-import {Instance} from "orm";
-
 declare module 'orm' {
 
     import events = require('events');
