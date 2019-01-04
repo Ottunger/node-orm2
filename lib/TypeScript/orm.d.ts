@@ -1,5 +1,7 @@
 ﻿/// <reference path="sql-query.d.ts" />
 
+import {Instance} from "orm";
+
 declare module 'orm' {
 
     import events = require('events');
@@ -99,6 +101,13 @@ declare module 'orm' {
             validate(callback: (errors: Error[]) => void);
 
             [property: string]: any;
+        }
+
+        export interface Singleton {
+            clear(key?: string): Singleton;
+            get(key: string, opts: {saveCheck?: boolean, identityCache?: number},
+                createCb: (err: any, value: Instance) => void, returnCb: (err: any, value: Instance) => void);
+            clearType(type: string);
         }
 
         export interface ModelOptions {

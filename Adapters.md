@@ -9,7 +9,7 @@ require('orm2').addAdapter('cassandra', CassandraAdapter);
 The first argument is the alias to register for connection URLs. For example, the above will allow you to do this:
  
 ```js
-var orm = require('orm2');
+const orm = require('orm2');
 orm.connect('cassandra://username:password@localhost/test', function (err, db) { });
 ```
 
