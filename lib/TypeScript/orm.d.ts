@@ -243,6 +243,8 @@ declare module 'orm' {
         export function unique(message?: string);
         export function unique(opts: {ignoreCase: boolean}, message?: string);
 
+        export function promisify(fct: Function): Promise<any>;
+
         export class singleton {
             static clear(key?: string): singleton;
 
